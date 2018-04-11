@@ -1,0 +1,7 @@
+/build/
+/config/
+/dist/
+/*.js
+/src/assets/js/**/*.js
+/src/modules/**/router/index.js
+/test/unit/coverage/
