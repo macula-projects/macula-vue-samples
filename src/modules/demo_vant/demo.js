@@ -1,13 +1,17 @@
+/**
+ * 单页入口JS，各个模块可以参考
+ */
 import 'es6-promise/auto'
 import Vue from 'vue'
 import FastClick from 'fastclick'
 import store from './store'
 import router from './router'
 import { sync } from 'vuex-router-sync'
+import wechatTitle from 'vue-wechat-title'
 import { VueExtendLayout, layout } from '../../plugins/layout'
 
-// 处理element状态，加载动画、前进后退、位置
-store.registerModule('element', {
+// 处理vant状态，加载动画、前进后退、位置
+store.registerModule('vant', {
   state: {
     isLoading: false,
     direction: 'forward'
@@ -26,6 +30,9 @@ Vue.use(VueExtendLayout, {layouts: require.context('./layouts', false, /^\.\/.*\
 
 // 点击延迟
 FastClick.attach(document.body)
+
+// 设置微信标题
+Vue.use(wechatTitle)
 
 // 将当前路由信息同步到store.state中
 sync(store, router)

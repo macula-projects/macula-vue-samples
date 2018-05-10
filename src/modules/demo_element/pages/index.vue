@@ -8,7 +8,7 @@
 <routeMeta>
   {
     title: '首页',
-    layout: 'layout-admin'
+    layout: 'layout-home'
   }
 </routeMeta>
 
