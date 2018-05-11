@@ -7,8 +7,8 @@
 
 <routeMeta>
   {
-    title: '首页',
-    layout: 'layout-home'
+    title: 'Hello World',
+    layout: 'layout-admin'
   }
 </routeMeta>
 
