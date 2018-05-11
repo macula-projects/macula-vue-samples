@@ -7,7 +7,7 @@
 
 <routeMeta>
   {
-    title: 'Hello World',
+    title: '后端首页',
     layout: 'layout-admin'
   }
 </routeMeta>
