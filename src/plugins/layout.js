@@ -13,7 +13,9 @@ export function VueExtendLayout (Vue, options = {}) {
   if (options.layouts) {
     options.layouts.keys().map(options.layouts).forEach(c => {
       c = c.default || c
-      Vue.component(c.name, c)
+      if (c && c.name) {
+        Vue.component(c.name, c)
+      }
     })
   }
 }

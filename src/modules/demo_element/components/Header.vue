@@ -1,35 +1,58 @@
 <template>
-	<el-header>
-		<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-				{{collapsed?'':sysName}}
-		</el-col>
-		<el-col :span="10">
-				<div class="tools" @click.prevent="collapse">
-				<i class="fa fa-align-justify"></i>
-				</div>
-		</el-col>
-		<el-col :span="4" class="userinfo">
-				<el-dropdown trigger="hover">
-				<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
-				<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item>我的消息</el-dropdown-item>
-						<el-dropdown-item>设置</el-dropdown-item>
-						<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
-				</el-dropdown-menu>
-				</el-dropdown>
-		</el-col>
-	</el-header>
+  <el-header>
+    <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+      {{collapsed?'':sysName}}
+    </el-col>
+    <el-col :span="10">
+      <div class="tools" @click.prevent="collapse">
+        <i class="fa fa-align-justify"></i>
+      </div>
+    </el-col>
+    <el-col :span="4" class="userinfo">
+        <el-dropdown trigger="hover">
+          <span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>我的消息</el-dropdown-item>
+            <el-dropdown-item>设置</el-dropdown-item>
+            <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+    </el-col>
+  </el-header>
 </template>
 
-<style scoped lang="scss">
-@import "vars.scss";
+<script>
+import { Header, Col, Dropdown, DropdownMenu, DropdownItem } from 'element-ui'
 
-.container {
-  .header {
+export default {
+  name: 'MuHeader',
+  components: {
+    [Header.name]: Header,
+    [Col.name]: Col,
+    [Dropdown.name]: Dropdown,
+    [DropdownMenu.name]: DropdownMenu,
+    [DropdownItem.name]: DropdownItem
+  },
+  data () {
+    return {
+      sysName: 'VUEADMIN',
+      collapsed: false,
+      sysUserName: '',
+      sysUserAvatar: ''
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "vars.scss";
+.el-container {
+  .el-header {
     height: 60px;
     line-height: 60px;
     background: $color-primary;
     color: #fff;
+    padding: 0;
     .userinfo {
       text-align: right;
       padding-right: 35px;
@@ -47,7 +70,7 @@
       }
     }
     .logo {
-      //width:230px;
+      width:230px;
       height: 60px;
       font-size: 22px;
       padding-left: 20px;
