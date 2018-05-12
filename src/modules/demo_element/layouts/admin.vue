@@ -1,66 +1,125 @@
 <template>
-  <div id="app">
-    <el-container direction="vertical">
-      <mu-header />
-      <el-container>
-        <mu-aside />
-        <mu-main />
-      </el-container>
+  <el-container class="app-container" verti>
+    <!--全局头部-->
+    <el-header :style="{padding: 0}" height="64px">
+      <global-header
+        :logo="logo"
+        :current-user="currentUser"
+        :collapsed="collapsed"
+        @collapse="handleMenuCollapse"
+        @menu-click="handleMenuClick"
+      />
+    </el-header>
+    <el-container>
+      <!-- 左栏菜单 -->
+      <sider-menu
+        :collapsed="collapsed"
+        :logo="logo"
+        :menu-data="getMenuData()"
+      >
+      </sider-menu>
+
+      <!-- Main -->
+      <el-main :style="{'padding-bottom': 0}">
+        <router-view/>
+      </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
 
 <script>
-import { Container } from 'element-ui'
-import Header from '../components/Header'
-import Aside from '../components/Aside'
-import Main from '../components/Main'
+import Vue from 'vue'
+import {
+  Container,
+  Aside,
+  Header,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Main,
+  Footer
+} from 'element-ui'
+import { getMenuData } from '../service/menu'
+import logo from '../assets/logo.png'
+import GlobalHeader from '../components/GlobalHeader'
+import SiderMenu from '../components/SiderMenu'
+
+/**
+ * 根据菜单取得重定向地址.
+ */
+const redirectData = []
+const getRedirect = (item) => {
+  if (item && item.children) {
+    if (item.children[0] && item.children[0].path) {
+      redirectData.push({
+        from: `/${item.path}`,
+        to: `/${item.children[0].path}`
+      })
+      item.children.forEach((children) => {
+        getRedirect(children)
+      })
+    }
+  }
+}
+getMenuData().forEach(getRedirect)
 
 export default {
   name: 'layout-admin',
   components: {
-    [Container.name]: Container,
-    [Main.name]: Main,
-    [Aside.name]: Aside,
-    [Header.name]: Header
+    Container,
+    Aside,
+    Header,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem,
+    Main,
+    GlobalHeader,
+    SiderMenu
+  },
+  data() {
+    return {
+      logo,
+      collapsed: false,
+      searchValue: ''
+    }
+  },
+  computed: {
+    currentUser () {
+      return 'Rain Wang'
+    }
+  },
+  watch: {
+    searchValue (value) {
+      console.log('search input', value)
+    }
+  },
+  mounted () {
+    this.$store.dispatch('user/fetchCurrent')
+  },
+  methods: {
+    handleMenuCollapse (collapsed) {
+      this.collapsed = collapsed
+    },
+    handleMenuClick (command) {
+      if (command === 'logout') {
+        this.$store.dispatch('login/logout')
+      }
+    },
+    getMenuData () {
+      return getMenuData()
+    }
   }
 }
 </script>
 
-<style lang="scss">
-body {
-  margin: 0px;
-  padding: 0px;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
-  font-size: 14px;
-  -webkit-font-smoothing: antialiased;
+<style lang="scss" scoped>
+@import '~theme/theme.scss';
+.app-container {
+  position: relative;
+  height: 100%;
+  background: $layout-body-background;
 }
-#app {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  width: 100%;
-}
-.el-container {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  width: 100%;
-  .el-container {
-    display: flex;
-    // background: #324057;
-    position: absolute;
-    top: 60px;
-    bottom: 0px;
-    overflow: hidden;
-  }
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: all .2s ease;
-}
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
+.github-icon {
+  font-size: 20px;
 }
 </style>

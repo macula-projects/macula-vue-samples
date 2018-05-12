@@ -1,4 +1,4 @@
-import { isUrl } from 'utils'
+import { isUrl } from '../utils/utils'
 
 const anticon = (name) => {
   return `anticon anticon-${name}`
