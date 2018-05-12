@@ -12,7 +12,10 @@
 import { Autocomplete } from 'element-ui'
 
 export default {
-  data() {
+  comments: {
+    Autocomplete
+  },
+  data () {
     return {
       searchMode: false,
       value: ''
@@ -21,7 +24,7 @@ export default {
   props: {
     data: {
       type: Array,
-      default() {
+      default () {
         return []
       }
     }
@@ -50,18 +53,18 @@ export default {
       this.searchMode = !this.searchMode
       this.$nextTick(() => {
         if (this.searchMode) {
-          const ref: any = this.$refs.autocomplete
+          const ref = this.$refs.autocomplete
           setTimeout(() => {
             ref.$refs.input.focus()
           }, 300)
         }
       })
     },
-    onSearchSelect(item) {
+    onSearchSelect (item) {
       this.searchMode = true
       this.$emit('select', item.value)
     },
-    onSearchInput(value: string) {
+    onSearchInput (value) {
       this.value = value
       this.$emit('input', value)
     }

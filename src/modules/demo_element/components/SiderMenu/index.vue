@@ -1,12 +1,12 @@
 <template>
   <el-aside :class="collapsed ? 'sider collapsed' : 'sider'" :width="collapsed ? '64px' : '256px'">
-    <el-menu unique-opened 
+    <el-menu unique-opened
             :default-active="this.$route.path"
             :collapse="collapsed"
             style="padding: '16px 0', width: '100%'"
     >
       <template v-for="item in this.menuData" >
-        <el-submenu :index="item.code" v-if="item.children.length>0" :key="item.code"> 
+        <el-submenu :index="item.code" v-if="item.children.length>0" :key="item.code">
           <template slot="title"  style="padding-left:10px" >
             <i class="el-icon-menu"></i>
             <span slot="title">{{ item.name}}</span>
@@ -16,27 +16,25 @@
         <el-menu-item v-else :index="item.code"  :key="item.code" style="padding-left: 50px;">
           <span>{{item.name}}</span>
         </el-menu-item>
-      </template>    
+      </template>
     </el-menu>
   </el-aside>
 </template>
 
 <script>
 import {Aside, Menu, Submenu, MenuItem} from 'element-ui'
-import * as pathToRegexp from 'path-to-regexp'
-import { urlToList } from '../utils/pathTools'
 
 export default {
-  name:'SiderMenu',
+  name: 'SiderMenu',
   components: {
     Aside, Menu, Submenu, MenuItem
   },
-  props:['menuData', 'collapsed']
+  props: ['menuData', 'collapsed']
 }
 </script>
 
 <style lang="scss" scoped>
-@import '~theme/theme.scss';
+@import '../../theme/theme.scss';
 .sider {
   // height: 100%;
   min-height: 100vh;

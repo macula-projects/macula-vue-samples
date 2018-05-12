@@ -1,10 +1,10 @@
 <script>
 export default {
-  data() {
+  data () {
     return {}
   },
   methods: {
-    renderActions(h) {
+    renderActions (h) {
       const actions = this.$slots.action
       if (!actions || !(actions.length > 0)) {
         return null
@@ -19,7 +19,7 @@ export default {
       return h('div', { class: 'ep-list-item-action' }, children)
     }
   },
-  render(h) {
+  render (h) {
     const content = this.$slots.default ? h(
       'div',
       { class: 'ep-list-item-content' },

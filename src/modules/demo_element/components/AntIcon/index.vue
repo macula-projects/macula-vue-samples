@@ -1,5 +1,5 @@
 <template>
-  <i class="anticon anticon-{{type}}"></i>
+  <i class="anticon `anticon-${type}`"></i>
 </template>
 
 <script>

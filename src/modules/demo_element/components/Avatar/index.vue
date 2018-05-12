@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     const sizeCls = {
       'avatar-lg': this.size === 'large',
       'avatar-sm': this.size === 'small'
@@ -42,7 +42,7 @@ export default {
     src: String
   },
   methods: {
-    handleImgLoadError() {
+    handleImgLoadError () {
       this.isImgExist = false
     }
   }
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~theme/theme.scss';
+@import '../../theme/theme.scss';
 @mixin avatar-size($size, $font-size) {
   width: $size;
   height: $size;

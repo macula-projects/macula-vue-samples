@@ -18,8 +18,8 @@
         :tabs="noticeTabs"
       >
       </notice-icon>
-      <el-dropdown 
-        v-if="currentUser.name" 
+      <el-dropdown
+        v-if="currentUser.name"
         class="action"
         @command="onMenuClick"
       >
@@ -34,10 +34,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item disabled>个人中心</el-dropdown-item>
           <el-dropdown-item disabled>设置</el-dropdown-item>
-          <el-dropdown-item 
-            divided 
-            command="logout"
-          >
+          <el-dropdown-item divided command="logout">
             退出登录
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -154,7 +151,7 @@ export default {
   props: {
     currentUser: {
       type: Object,
-      default() {
+      default () {
         return {}
       }
     },
@@ -163,32 +160,32 @@ export default {
     },
     fetchingNotices: {
       type: Array,
-      default() {
+      default () {
         return []
       }
     },
     isMobile: Boolean,
     logo: String
   },
-  data() {
+  data () {
     return {
       noticeTabs,
       searchValue: ''
     }
   },
   methods: {
-    onSearchSelect(value) {
+    onSearchSelect (value) {
       console.log('search select', value)
     },
-    onMenuClick(command) {
+    onMenuClick (command) {
       this.$emit('menu-click', command)
     },
-    toggle() {
+    toggle () {
       const { collapsed } = this
       this.$emit('collapse', !collapsed)
       debounce(this.triggerResizeEvent, 600)()
     },
-    triggerResizeEvent() {
+    triggerResizeEvent () {
       const event = document.createEvent('HTMLEvents')
       event.initEvent('resize', true, false)
       window.dispatchEvent(event)
@@ -198,7 +195,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~theme/theme.scss';
+@import '../../theme/theme.scss';
 .global-header {
   height: 64px;
   padding: 0 12px 0 0;

@@ -19,17 +19,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
 import EpList from '../List/index.vue'
 import EpListItem from '../List/ListItem.vue'
 import EpListItemMeta from '../List/ListItemMeta.vue'
 import Avatar from '../Avatar/index.vue'
-export default Vue.extend({
+export default {
   props: {
     data: {
       type: Array,
-      default() {
+      default () {
         return []
       }
     }
@@ -40,11 +39,11 @@ export default Vue.extend({
     EpListItemMeta,
     Avatar
   }
-})
+}
 </script>
 
 <style lang="scss" scoped>
-@import '~theme/theme.scss';
+@import '../../theme/theme.scss';
 .list {
   max-height: 400px;
   overflow: auto;

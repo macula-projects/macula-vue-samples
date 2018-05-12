@@ -34,7 +34,7 @@ export default {
     title: String,
     description: String
   },
-  data() {
+  data () {
     return {
       cls: 'ep-list-item-meta'
     }

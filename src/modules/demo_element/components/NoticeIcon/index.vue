@@ -29,9 +29,9 @@ import NoticeList from './NoticeList.vue'
 
 export default {
   components: {
-    Badge, Popover, Button, Tabs, TabPane
+    Badge, Popover, Button, Tabs, TabPane, NoticeList
   },
-  data() {
+  data () {
     const activeTab =
       this.tabs && this.tabs.length > 0 ? this.tabs[0].title : ''
     return {
@@ -42,7 +42,7 @@ export default {
   props: {
     tabs: {
       type: Array,
-      default() {
+      default () {
         return []
       }
     }
@@ -61,14 +61,11 @@ export default {
       })
     }
   },
-  components: {
-    NoticeList
-  },
   methods: {
-    onTabChange(tab, event) {
+    onTabChange (tab, event) {
       console.log('NoticeIcon/index, onTabChange, tab:', tab, 'event:', event)
     },
-    getNoticeData(noticeList) {
+    getNoticeData (noticeList) {
       if (!noticeList || noticeList.length < 0) {
         return []
       }

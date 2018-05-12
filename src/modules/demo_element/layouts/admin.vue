@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import {Container, Header, Main} from 'element-ui'
 import GlobalHeader from '../components/GlobalHeader'
 import SiderMenu from '../components/SiderMenu'
@@ -62,7 +61,7 @@ export default {
     GlobalHeader,
     SiderMenu
   },
-  data() {
+  data () {
     return {
       logo,
       collapsed: false,
@@ -99,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~theme/theme.scss';
+@import '../theme/theme.scss';
 .app-container {
   position: relative;
   height: 100%;
