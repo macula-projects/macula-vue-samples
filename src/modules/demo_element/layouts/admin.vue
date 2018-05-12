@@ -14,7 +14,6 @@
       <!-- 左栏菜单 -->
       <sider-menu
         :collapsed="collapsed"
-        :logo="logo"
         :menu-data="getMenuData()"
       >
       </sider-menu>
@@ -29,20 +28,11 @@
 
 <script>
 import Vue from 'vue'
-import {
-  Container,
-  Aside,
-  Header,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Main,
-  Footer
-} from 'element-ui'
-import { getMenuData } from '../service/menu'
-import logo from '../assets/logo.png'
+import {Container, Header, Main} from 'element-ui'
 import GlobalHeader from '../components/GlobalHeader'
 import SiderMenu from '../components/SiderMenu'
+import { getMenuData } from '../service/menu'
+import logo from '../assets/logo.png'
 
 /**
  * 根据菜单取得重定向地址.
@@ -67,11 +57,7 @@ export default {
   name: 'layout-admin',
   components: {
     Container,
-    Aside,
     Header,
-    Dropdown,
-    DropdownMenu,
-    DropdownItem,
     Main,
     GlobalHeader,
     SiderMenu

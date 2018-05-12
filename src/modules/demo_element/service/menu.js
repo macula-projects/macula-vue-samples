@@ -6,53 +6,58 @@ const anticon = (name) => {
 
 const menuData = [
   {
+    code: 'dashboard',
     name: 'dashboard',
     icon: anticon('dashboard'),
     path: 'dashboard',
     children: [
       {
+        code: 'analysis',
         name: '分析页',
         path: 'analysis'
       },
       {
+        code: 'monitor',
         name: '监控页',
         path: 'monitor'
       },
       {
+        code: 'workplace',
         name: '工作台',
         path: 'workplace'
-        // hideInBreadcrumb: true,
-        // hideInMenu: true,
-        // authority: 'admin'
       }
     ]
   },
   {
+    code: 'form',
     name: '表单页',
     icon: anticon('form'),
     path: 'form',
     children: [
       {
+        code: 'basic-form',
         name: '基础表单',
         path: 'basic-form'
       },
       {
+        code: 'step-form',
         name: '分步表单',
         path: 'step-form'
       }
       // {
       //   name: '高级表单',
-      //   authority: 'admin',
       //   path: 'advanced-form'
       // }
     ]
   },
   {
+    code: 'list',
     name: '列表页',
     icon: anticon('table'),
     path: 'list',
     children: [
       {
+        code: 'table-list',
         name: '查询表格',
         path: 'table-list'
       }
@@ -85,83 +90,74 @@ const menuData = [
     ]
   },
   {
+    code: 'profile',
     name: '详情页',
     icon: anticon('profile'),
     path: 'profile',
     children: [
       {
+        code: 'basic',
         name: '基础详情页',
         path: 'basic'
       },
       {
+        code: 'advanced',
         name: '高级详情页',
-        path: 'advanced',
-        authority: 'admin'
+        path: 'advanced'
       }
     ]
   },
   {
+    code: 'result',
     name: '结果页',
     icon: anticon('check-circle-o'),
     path: 'result',
     children: [
       {
+        code: 'success',
         name: '成功',
         path: 'success'
       },
       {
+        code: 'fail',
         name: '失败',
         path: 'fail'
       }
     ]
   },
   {
+    code: 'exception',
     name: '异常页',
     icon: anticon('warning'),
     path: 'exception',
     children: [
       {
+        code: '403',
         name: '403',
         path: '403'
       },
       {
+        code: '404',
         name: '404',
         path: '404'
       },
       {
+        code: '500',
         name: '500',
         path: '500'
       },
       {
+        code: 'trigger',
         name: '触发异常',
         path: 'trigger',
         hideInMenu: true
       }
     ]
-  },
-  {
-    name: '账户',
-    icon: anticon('user'),
-    path: 'user',
-    authority: 'guest',
-    children: [
-      {
-        name: '登录',
-        path: 'login'
-      },
-      {
-        name: '注册',
-        path: 'register'
-      },
-      {
-        name: '注册结果',
-        path: 'register-result'
-      }
-    ]
   }
 ]
 
-function formatter (data, parentPath = '/', parentAuthority) {
+// 拼接路径，将父亲和children中的path串起来
+function formatter (data, parentPath = '/') {
   return data.map(item => {
     let { path } = item
     if (!isUrl(path)) {
@@ -169,14 +165,12 @@ function formatter (data, parentPath = '/', parentAuthority) {
     }
     const result = {
       ...item,
-      path,
-      authority: item.authority || parentAuthority
+      path
     }
     if (item.children) {
       result.children = formatter(
         item.children,
-        `${parentPath}${item.path}/`,
-        item.authority
+        `${parentPath}${item.path}/`
       )
     }
     return result
