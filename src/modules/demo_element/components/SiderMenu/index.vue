@@ -6,12 +6,12 @@
             style="padding: '16px 0', width: '100%'"
     >
       <template v-for="item in this.menuData" >
-        <el-submenu :index="item.code" v-if="item.children.length>0" :key="item.code">
+        <el-submenu :index="item.code" v-if="item.children" :key="item.code">
           <template slot="title"  style="padding-left:10px" >
             <i class="el-icon-menu"></i>
             <span slot="title">{{ item.name}}</span>
           </template>
-          <Menu :menuData="item.children"></Menu>
+          <sider-menu :menuData="item.children"></sider-menu>
         </el-submenu>
         <el-menu-item v-else :index="item.code"  :key="item.code" style="padding-left: 50px;">
           <span>{{item.name}}</span>
@@ -27,7 +27,10 @@ import {Aside, Menu, Submenu, MenuItem} from 'element-ui'
 export default {
   name: 'SiderMenu',
   components: {
-    Aside, Menu, Submenu, MenuItem
+    [Aside.name]: Aside,
+    [Menu.name]: Menu,
+    [Submenu.name]: Submenu,
+    [MenuItem.name]: MenuItem
   },
   props: ['menuData', 'collapsed']
 }

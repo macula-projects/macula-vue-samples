@@ -29,7 +29,12 @@ import NoticeList from './NoticeList.vue'
 
 export default {
   components: {
-    Badge, Popover, Button, Tabs, TabPane, NoticeList
+    [Badge.name]: Badge,
+    [Popover.name]: Popover,
+    [Button.name]: Button,
+    [Tabs.name]: Tabs,
+    [TabPane.name]: TabPane,
+    NoticeList
   },
   data () {
     const activeTab =

@@ -12,8 +12,8 @@
 import { Autocomplete } from 'element-ui'
 
 export default {
-  comments: {
-    Autocomplete
+  components: {
+    [Autocomplete.name]: Autocomplete
   },
   data () {
     return {

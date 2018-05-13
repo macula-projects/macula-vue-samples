@@ -48,7 +48,7 @@
 
 <script>
 import { debounce } from 'lodash'
-import { Loading } from 'element-ui'
+import { Loading, Dropdown, DropdownItem, DropdownMenu } from 'element-ui'
 import Avatar from '../Avatar/index.vue'
 import AntIcon from '../AntIcon/index.vue'
 import HeaderSearch from '../HeaderSearch/index.vue'
@@ -142,10 +142,13 @@ const noticeTabs = [
 ]
 export default {
   components: {
+    [Loading.name]: Loading,
+    [Dropdown.name]: Dropdown,
+    [DropdownMenu.name]: DropdownMenu,
+    [DropdownItem.name]: DropdownItem,
     Avatar,
     HeaderSearch,
     NoticeIcon,
-    Loading,
     AntIcon
   },
   props: {

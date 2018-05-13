@@ -33,31 +33,12 @@ import SiderMenu from '../components/SiderMenu'
 import { getMenuData } from '../service/menu'
 import logo from '../assets/logo.png'
 
-/**
- * 根据菜单取得重定向地址.
- */
-const redirectData = []
-const getRedirect = (item) => {
-  if (item && item.children) {
-    if (item.children[0] && item.children[0].path) {
-      redirectData.push({
-        from: `/${item.path}`,
-        to: `/${item.children[0].path}`
-      })
-      item.children.forEach((children) => {
-        getRedirect(children)
-      })
-    }
-  }
-}
-getMenuData().forEach(getRedirect)
-
 export default {
   name: 'layout-admin',
   components: {
-    Container,
-    Header,
-    Main,
+    [Container.name]: Container,
+    [Header.name]: Header,
+    [Main.name]: Main,
     GlobalHeader,
     SiderMenu
   },
@@ -70,7 +51,12 @@ export default {
   },
   computed: {
     currentUser () {
-      return 'Rain Wang'
+      return {
+        name: 'Rain Wang',
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+        userid: '00000001',
+        notifyCount: 12
+      }
     }
   },
   watch: {
@@ -79,7 +65,7 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch('user/fetchCurrent')
+    // this.$store.dispatch('user/fetchCurrent')
   },
   methods: {
     handleMenuCollapse (collapsed) {
