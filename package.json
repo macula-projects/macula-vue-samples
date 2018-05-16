@@ -17,6 +17,7 @@
     "build-staging": "cross-env NODE_ENV=staging node build/build.js"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0",
     "element-ui": "^2.3.3",
     "es6-promise": "^4.2.4",
     "fastclick": "^1.0.6",

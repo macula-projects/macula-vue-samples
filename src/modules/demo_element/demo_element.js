@@ -6,6 +6,11 @@ import router from './router'
 import { sync } from 'vuex-router-sync'
 import { VueExtendLayout, layout } from '../../plugins/layout'
 
+import 'bootstrap/dist/css/bootstrap-reboot.css'
+import '@/assets/element/scss/anticon.scss'
+import '@/assets/element/scss/element-theme.scss'
+import './demo_element.scss'
+
 // 处理element状态，加载动画、前进后退、位置
 store.registerModule('element', {
   state: {

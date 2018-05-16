@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../theme/theme.scss';
+@import '~@assets/element/scss/theme.scss';
 .list {
   max-height: 400px;
   overflow: auto;

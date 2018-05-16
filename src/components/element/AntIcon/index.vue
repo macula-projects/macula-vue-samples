@@ -1,5 +1,5 @@
 <template>
-  <i class="anticon `anticon-${type}`"></i>
+  <i :class="class1(type)"></i>
 </template>
 
 <script>
@@ -9,6 +9,11 @@ export default {
     type: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    class1: function (type) {
+      return 'anticon anticon-' + type
     }
   }
 }

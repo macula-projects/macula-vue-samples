@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../theme/theme.scss';
+@import '~@assets/element/scss/theme.scss';
 @mixin avatar-size($size, $font-size) {
   width: $size;
   height: $size;

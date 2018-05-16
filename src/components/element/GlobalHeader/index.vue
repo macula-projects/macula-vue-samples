@@ -1,10 +1,19 @@
 <template>
   <div class="global-header">
-    <ant-icon
-      :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-      class="trigger"
-      @click="toggle"
-    />
+    <div class="left">
+      <div class="logo" :style="{ width: width }">
+          <router-link to="/">
+            <img alt="logo" :src='logo' />
+            <h1>Element UI Pro</h1>
+          </router-link>
+      </div>
+      <ant-icon
+        :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+        class="trigger"
+        @click="toggle"
+      />
+      <slot name="menu"></slot>
+    </div>
     <div class="right">
       <header-search
         class="action search"
@@ -168,7 +177,13 @@ export default {
       }
     },
     isMobile: Boolean,
-    logo: String
+    logo: String,
+    width: {
+      type: String,
+      default () {
+        return '256px'
+      }
+    }
   },
   data () {
     return {
@@ -198,23 +213,54 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../theme/theme.scss';
+@import '~@assets/element/scss/theme.scss';
 .global-header {
-  height: 64px;
+  height: 60px;
   padding: 0 12px 0 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   position: relative;
   display: flex;
   justify-content: space-between;
+  .el-menu--horizontal {
+    border: none
+  }
   .trigger {
     font-size: 20px;
-    line-height: 64px;
+    line-height: 60px;
     cursor: pointer;
     transition: all 0.3s;
     padding: 0 24px;
     &:hover {
       background: $primary-1;
+    }
+  }
+  .left {
+    height: 100%;
+    display: flex;
+    .logo {
+      height: 60px;
+      position: relative;
+      line-height: 60px;
+      padding-left: 24px;
+      transition: all 0.3s;
+      background: #002140;
+      overflow: hidden;
+      box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+      img {
+        display: inline-block;
+        vertical-align: middle;
+        height: 32px;
+      }
+      h1 {
+        color: #fff;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 20px;
+        margin: 0 0 0 12px;
+        // font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-weight: 600;
+      }
     }
   }
   .right {
