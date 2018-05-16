@@ -1,6 +1,3 @@
-<template>
-  <i :class="class1(type)"></i>
-</template>
 
 <script>
 export default {
@@ -11,10 +8,12 @@ export default {
       required: true
     }
   },
-  methods: {
-    class1: function (type) {
-      return 'anticon anticon-' + type
-    }
+  render: function (h) {
+    const { type } = this
+    return h('i', {
+      class: ['anticon', `anticon-${type}`],
+      on: this.$listeners
+    })
   }
 }
 </script>

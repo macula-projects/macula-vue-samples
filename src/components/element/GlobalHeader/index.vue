@@ -196,9 +196,11 @@ export default {
       console.log('search select', value)
     },
     onMenuClick (command) {
+      console.log('test====')
       this.$emit('menu-click', command)
     },
     toggle () {
+      console.log('test====')
       const { collapsed } = this
       this.$emit('collapse', !collapsed)
       debounce(this.triggerResizeEvent, 600)()
