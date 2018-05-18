@@ -29,6 +29,7 @@ export default {
         return []
       }
     },
+    logo: String,
     Authorized: Function
   },
   data () {
@@ -127,11 +128,20 @@ export default {
             props: {
               index: item.path
             },
-            key: item.path
+            key: item.path,
+            scopedSlots: {
+              title: (props) => {
+                return [
+                  item.icon &&
+                    this.$createElement('i', { class: `icon ${item.icon}` }),
+                  this.$createElement('span', { slot: 'title' }, item.name)
+                ]
+              }
+            }
           },
           [
             h(
-              'div',
+              'template',
               { slot: 'title' },
               [
                 item.icon && this.$createElement('i', { class: `icon ${item.icon}` }),
@@ -196,7 +206,7 @@ export default {
     }
   },
   render (h) {
-    const { collapsed, openKeys } = this
+    const { collapsed, logo, openKeys } = this
     // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys().filter(item => item)
     if (!selectedKeys.length) {
@@ -216,12 +226,38 @@ export default {
       },
       [
         h(
+          'div',
+          {
+            class: 'logo'
+          },
+          [
+            h(
+              'router-link',
+              {
+                props: {
+                  to: '/'
+                }
+              },
+              [
+                h('img', {
+                  attrs: {
+                    alt: 'logo',
+                    src: logo
+                  }
+                }),
+                h('h1', 'Element UI Pro')
+              ]
+            )
+          ]
+        ),
+        h(
           'el-menu',
           {
             props: {
               mode: 'vertical',
               'unique-opened': true,
               collapse: collapsed,
+              collapseTransition: false,
               'default-active': selectedKey,
               'default-openeds': openKeys
             },
@@ -250,10 +286,6 @@ export default {
   background-color: $layout-sider-background;
   transition: all 0.3s;
 
-  &.collapse {
-    overflow: visible;
-  }
-
   /deep/ .el-menu {
     color: $menu-dark-color;
     background: $menu-dark-bg;
@@ -266,7 +298,7 @@ export default {
       }
       &:hover {
         color: #fff;
-        background: transparent;
+        background-color: #2d5b86;
         > a {
           color: #fff;
         }
@@ -293,13 +325,15 @@ export default {
 
     .el-submenu {
       &__title {
+        height: 44px;
+        line-height: 44px;
         color: $menu-dark-color;
         > i {
           color: $menu-dark-color;
         }
         &:hover {
           color: #fff;
-          background-color: transparent;
+          background-color: #2d5b86;
           > i {
             color: #fff;
           }
@@ -324,5 +358,40 @@ export default {
       }
     }
   }
+
+  &.collapse {
+    overflow: visible;
+    .logo {
+      padding-left: 16px;
+    }
+  }
+  .logo {
+    height: 50px;
+    position: relative;
+    line-height: 50px;
+    padding-left: 24px;
+    transition: all 0.3s;
+    background: #002140;
+    overflow: hidden;
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      height: 32px;
+    }
+    h1 {
+      color: #fff;
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 20px;
+      margin: 0 0 0 12px;
+      // font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      font-weight: 600;
+    }
+  }
+}
+
+.el-menu-item, .el-submenu__title {
+      height: 40px;
+      line-height: 40px;
 }
 </style>

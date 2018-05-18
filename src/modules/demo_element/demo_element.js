@@ -11,6 +11,8 @@ import '@/assets/element/scss/anticon.scss'
 import '@/assets/element/scss/element-theme.scss'
 import './demo_element.scss'
 
+Vue.prototype.$ELEMENT = { size: 'small' }
+
 // 处理element状态，加载动画、前进后退、位置
 store.registerModule('element', {
   state: {

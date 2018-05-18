@@ -46,13 +46,13 @@ const webpackConfig = merge(baseWebpackConfig, {
         //     exclude: [/node_modules[\\\/]vue/]
         // }),
         // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            sourceMap: config.build.productionSourceMap,
-            parallel: true
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     },
+        //     sourceMap: config.build.productionSourceMap,
+        //     parallel: true
+        // }),
         // extract css into its own file
         new ExtractTextPlugin({
             filename: utils.assetsPath('css/[name].[contenthash].css'),

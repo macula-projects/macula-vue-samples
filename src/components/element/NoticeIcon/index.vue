@@ -14,7 +14,7 @@
     </el-popover>
 
     <div class="noticeButton" v-popover:notice-popover>
-      <el-badge :value="13" class="badge">
+      <el-badge :value="badge" class="badge">
         <i class="el-icon-bell"></i>
       </el-badge>
     </div>
@@ -50,7 +50,8 @@ export default {
       default () {
         return []
       }
-    }
+    },
+    badge: 0
   },
   computed: {
     tabOptions () {

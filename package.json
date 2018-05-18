@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
-    "element-ui": "^2.3.3",
+    "element-ui": "^2.3.8",
     "es6-promise": "^4.2.4",
     "fastclick": "^1.0.6",
     "moment": "^2.22.1",

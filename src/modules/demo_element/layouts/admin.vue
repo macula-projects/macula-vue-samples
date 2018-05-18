@@ -1,32 +1,14 @@
 <template>
-  <el-container class="app-container" verti>
-    <!--全局头部-->
-    <el-header :style="{padding: 0}">
-      <global-header
-        :logo="logo"
-        :current-user="currentUser"
-        :collapsed="collapsed"
-        @collapse="handleMenuCollapse"
-        @menu-click="handleMenuClick"
-      >
-        <el-menu
-          :default-active="'1'"
-          mode="horizontal"
-          slot="menu">
-          <el-menu-item index="1">处理中心</el-menu-item>
-          <el-menu-item index="3" disabled>消息中心</el-menu-item>
-          <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-        </el-menu>
-      </global-header>
-    </el-header>
+  <el-container class="app-container">
+    <!-- 左栏菜单 -->
+    <sider-menu :collapsed="collapsed" :logo="logo" :menu-data="getMenuData()"/>
     <el-container>
-      <!-- 左栏菜单 -->
-      <sider-menu
-        :collapsed="collapsed"
-        :menu-data="getMenuData()"
-      >
-      </sider-menu>
-
+      <!--全局头部-->
+      <el-header :style="{padding: 0}" height="50px">
+        <global-header :current-user="currentUser" :collapsed="collapsed" @collapse="handleMenuCollapse">
+          <top-menu :menu-data="getMenuData()" slot="top-menu" />
+        </global-header>
+      </el-header>
       <!-- Main -->
       <el-main :style="{'padding-bottom': 0}">
         <router-view/>
@@ -39,6 +21,7 @@
 import {Container, Header, Main, Menu, MenuItem, Submenu} from 'element-ui'
 import GlobalHeader from '@components/element/GlobalHeader'
 import SiderMenu from '@components/element/SiderMenu'
+import TopMenu from '@components/element/TopMenu'
 import { getMenuData } from '../service/menu'
 import logo from '@assets/element/images/logo.png'
 
@@ -52,7 +35,8 @@ export default {
     [MenuItem.name]: MenuItem,
     [Submenu.name]: Submenu,
     GlobalHeader,
-    SiderMenu
+    SiderMenu,
+    TopMenu
   },
   data () {
     return {
@@ -106,5 +90,4 @@ export default {
 .github-icon {
   font-size: 20px;
 }
-
 </style>

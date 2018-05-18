@@ -84,7 +84,7 @@ export default {
     background: transparent;
     border-radius: 0;
     /deep/ .el-input {
-      /deep/ .el-input__inner {
+      .el-input__inner {
         border: 0;
         border-radius: 0;
         padding-left: 0;
@@ -97,6 +97,12 @@ export default {
       width: 210px;
       margin-left: 8px;
     }
+  }
+}
+.el-autocomplete {
+  .el-input {
+    width: 0;
+    padding: 0;
   }
 }
 </style>
