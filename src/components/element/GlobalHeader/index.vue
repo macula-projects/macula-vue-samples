@@ -1,41 +1,29 @@
 <template>
   <div class="global-header">
+    <!--头部左边-->
     <div class="left">
-      <ant-icon
-        :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-        class="trigger"
-        @click="toggle"
-      />
-      <slot name="top-menu"></slot>
+      <!-- LOGO -->
+      <ant-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" class="trigger" @click="toggle" />
+      <!-- 左边菜单，可以在外部用slot替换 -->
+      <slot name="top-menu">
+        <el-menu>
+          <el-menu-item index="1">首页</el-menu-item>
+        </el-menu>
+      </slot>
     </div>
     <div class="right">
-      <header-search
-        class="action search"
-        placeholder="站内搜索"
-        v-model="searchValue"
-        :data="['搜索提示一', '搜索提示二', '搜索提示三']"
-        @select="onSearchSelect"
-      />
+      <header-search class="action search" placeholder="站内搜索" v-model="searchValue" :data="searchData" @select="onSearchSelect"/>
+      <!--帮助-->
       <a target="_blank" href="helpurl" class="action">
         <ant-icon type="question-circle-o"/>
       </a>
-      <notice-icon
-        class="action notice"
-        :tabs="noticeTabs"
-        :badge="currentUser.notifyCount"
-      >
-      </notice-icon>
-      <el-dropdown
-        v-if="currentUser.name"
-        class="action"
-        @command="onMenuClick"
-      >
+      <!--消息提醒-->
+      <notice-icon v-if="noticeTabs" class="action notice" :tabs="noticeTabs" :badge="currentUser.notifyCount" />
+
+      <!--个人菜单-->
+      <el-dropdown v-if="currentUser.name" class="action" @command="onUserMenuClick">
         <span class="action account">
-          <avatar
-            class="avatar"
-            size="small"
-            :src="currentUser.avatar"
-          />
+          <avatar class="avatar" size="small" :src="currentUser.avatar"/>
           <span class="name">{{currentUser.name}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -61,92 +49,6 @@ import AntIcon from '../AntIcon/index.vue'
 import HeaderSearch from '../HeaderSearch/index.vue'
 import NoticeIcon from '../NoticeIcon/index.vue'
 
-const noticeTabs = [
-  {
-    title: '通知',
-    list: [
-      {
-        id: '000000001',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
-        title: '你收到了 14 份新周报',
-        datetime: '2017-08-09',
-        type: '通知'
-      },
-      {
-        id: '000000002',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
-        title: '你推荐的 曲妮妮 已通过第三轮面试',
-        datetime: '2017-08-08',
-        type: '通知'
-      },
-      {
-        id: '000000003',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png',
-        title: '这种模板可以区分多种通知类型',
-        datetime: '2017-08-07',
-        read: true,
-        type: '通知'
-      },
-      {
-        id: '000000004',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png',
-        title: '左侧图标用于区分不同的类型',
-        datetime: '2017-08-07',
-        type: '通知'
-      },
-      {
-        id: '000000005',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
-        title: '内容不要超过两行字，超出时自动截断',
-        datetime: '2017-08-07',
-        type: '通知'
-      }
-    ],
-    emptyText: '你已查看所有通知',
-    emptyImage:
-      'https://gw.alipayobjects.com/zos/rmsportal/wAhyIChODzsoKIOBHcBk.svg'
-  },
-  {
-    title: '消息',
-    list: [
-      {
-        id: '000000006',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
-        title: '曲丽丽 评论了你',
-        description: '描述信息描述信息描述信息',
-        datetime: '2017-08-07',
-        type: '消息'
-      },
-      {
-        id: '000000007',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
-        title: '朱偏右 回复了你',
-        description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
-        datetime: '2017-08-07',
-        type: '消息'
-      },
-      {
-        id: '000000008',
-        avatar:
-          'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
-        title: '标题',
-        description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
-        datetime: '2017-08-07',
-        type: '消息'
-      }
-    ],
-    emptyText: '你已读完所有消息',
-    emptyImage:
-      'https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg'
-  }
-]
 export default {
   components: {
     [Loading.name]: Loading,
@@ -165,10 +67,16 @@ export default {
         return {}
       }
     },
+    searchData: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
     collapsed: {
       type: Boolean
     },
-    fetchingNotices: {
+    noticeTabs: {
       type: Array,
       default () {
         return []
@@ -184,19 +92,23 @@ export default {
   },
   data () {
     return {
-      noticeTabs,
       searchValue: ''
+    }
+  },
+  watch: {
+    searchValue (value) {
+      console.log('search input', value)
     }
   },
   methods: {
     onSearchSelect (value) {
-      console.log('search select', value)
+      this.$emit('search-select', value)
     },
     onHelpClick () {
-
+      console.log('help click')
     },
-    onMenuClick (command) {
-      this.$emit('menu-click', command)
+    onUserMenuClick (command) {
+      this.$emit('user-menu-click', command)
     },
     toggle () {
       const { collapsed } = this

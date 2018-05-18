@@ -45,11 +45,11 @@ export default {
       return this.menuData
     }
   },
-  // watch: {
-  //   collapsed() {
-  //     this.openKeys = this.getDefaultCollapsedSubMenus()
-  //   }
-  // },
+  watch: {
+    collapsed () {
+      this.openKeys = this.getDefaultCollapsedSubMenus()
+    }
+  },
   created () {
     this.flatMenuKeys = this.getFlatMenuKeys(this.menuData)
     this.openKeys = this.getDefaultCollapsedSubMenus()
@@ -57,7 +57,7 @@ export default {
   methods: {
     /**
      * Convert pathname to openKeys
-     * /list/search/articles = > ['list','/list/search']
+     * /list/search/articles = > ['list','/list/search', '/list/search/articles']
      * @param  props
      */
     getDefaultCollapsedSubMenus () {
@@ -192,17 +192,6 @@ export default {
         return check(authority, ItemDom)
       }
       return ItemDom
-    },
-    handleOpenChange (openKeys) {
-      const lastOpenKey = openKeys[openKeys.length - 1]
-      const isMainMenu = this.menus.some(
-        item =>
-          !!(
-            lastOpenKey &&
-            (item.key === lastOpenKey || item.path === lastOpenKey)
-          )
-      )
-      this.openKeys = isMainMenu ? [lastOpenKey] : [...openKeys]
     }
   },
   render (h) {

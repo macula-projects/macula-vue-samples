@@ -5,7 +5,12 @@
     <el-container>
       <!--全局头部-->
       <el-header :style="{padding: 0}" height="50px">
-        <global-header :current-user="currentUser" :collapsed="collapsed" @collapse="handleMenuCollapse">
+        <global-header :current-user="currentUser"
+                       :notice-tabs="fetchNoticeTabs()"
+                       :collapsed="collapsed"
+                       :search-data="searchData"
+                       v-on:search-select="handleSearchSelect"
+                       @collapse="handleMenuCollapse">
           <top-menu :menu-data="getMenuData()" slot="top-menu" />
         </global-header>
       </el-header>
@@ -23,6 +28,7 @@ import GlobalHeader from '@components/element/GlobalHeader'
 import SiderMenu from '@components/element/SiderMenu'
 import TopMenu from '@components/element/TopMenu'
 import { getMenuData } from '../service/menu'
+import { fetchNoticeTabs } from '../service/notice'
 import logo from '@assets/element/images/logo.png'
 
 export default {
@@ -41,8 +47,8 @@ export default {
   data () {
     return {
       logo,
-      collapsed: false,
-      searchValue: ''
+      searchData: ['a', 'b'],
+      collapsed: false
     }
   },
   computed: {
@@ -53,11 +59,6 @@ export default {
         userid: '00000001',
         notifyCount: 12
       }
-    }
-  },
-  watch: {
-    searchValue (value) {
-      console.log('search input', value)
     }
   },
   mounted () {
@@ -72,8 +73,14 @@ export default {
         this.$store.dispatch('login/logout')
       }
     },
+    handleSearchSelect (value) {
+      console.log('=======' + value)
+    },
     getMenuData () {
       return getMenuData()
+    },
+    fetchNoticeTabs () {
+      return fetchNoticeTabs()
     }
   }
 }
