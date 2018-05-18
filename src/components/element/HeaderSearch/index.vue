@@ -2,7 +2,7 @@
   <span class="headerSearch">
     <i class="el-icon-search icon" @click="toggleSearchMode"></i>
     <el-autocomplete :value="value" :class="['autocomplete', {show: searchMode}]"
-      ref="autocomplete" :fetch-suggestions="querySearch" :select-when-unmatched="true"
+      ref="autocomplete" :fetch-suggestions="fetchSugesstions" :select-when-unmatched="true"
       v-bind="$attrs" @input="onSearchInput"
       @select="onSearchSelect"></el-autocomplete>
   </span>
@@ -22,33 +22,9 @@ export default {
     }
   },
   props: {
-    data: {
-      type: Array,
-      default () {
-        return []
-      }
-    }
-  },
-  computed: {
-    suggestionData () {
-      return this.data.map(datum => {
-        return { value: datum }
-      })
-    }
+    fetchSugesstions: Function
   },
   methods: {
-    querySearch (queryString, cb) {
-      const suggestionData = this.suggestionData
-      const results = queryString
-        ? suggestionData.filter(this.createFilter(queryString))
-        : suggestionData
-      cb(results)
-    },
-    createFilter (queryString) {
-      return (item) => {
-        return item.value.toLowerCase().indexOf(queryString.toLowerCase()) >= 0
-      }
-    },
     toggleSearchMode () {
       this.searchMode = !this.searchMode
       this.$nextTick(() => {

@@ -1,23 +1,79 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <router-link to="/HelloWorld">HelloWorld</router-link>
-  </div>
+  <el-table
+    :data='tableData3'
+    height='250'
+    border
+    style='width: 100%'>
+    <el-table-column
+      prop='date'
+      label='日期'
+      width='180'>
+    </el-table-column>
+    <el-table-column
+      prop='name'
+      label='姓名'
+      width='180'>
+    </el-table-column>
+    <el-table-column
+      prop='address'
+      label='地址'>
+    </el-table-column>
+  </el-table>
 </template>
 
 <routeMeta>
   {
-    title: '后端首页',
+    title: '表格',
     layout: 'layout-admin'
   }
 </routeMeta>
 
 <script>
+import { Table, TableColumn } from 'element-ui'
 export default {
-  name: 'table-list',
+  components: {
+    [Table.name]: Table,
+    [TableColumn.name]: TableColumn
+  },
   data () {
     return {
-      msg: '表格界面'
+      tableData3: [
+        {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-08',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-06',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-07',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }
+      ]
     }
   }
 }

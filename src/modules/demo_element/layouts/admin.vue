@@ -8,7 +8,7 @@
         <global-header :current-user="currentUser"
                        :notice-tabs="fetchNoticeTabs()"
                        :collapsed="collapsed"
-                       :search-data="searchData"
+                       :fetch-sugesstions="fetchSugesstions"
                        v-on:search-select="handleSearchSelect"
                        @collapse="handleMenuCollapse">
           <top-menu :menu-data="getMenuData()" slot="top-menu" />
@@ -47,7 +47,6 @@ export default {
   data () {
     return {
       logo,
-      searchData: ['a', 'b'],
       collapsed: false
     }
   },
@@ -81,6 +80,18 @@ export default {
     },
     fetchNoticeTabs () {
       return fetchNoticeTabs()
+    },
+    fetchSugesstions (queryString, cb) {
+      // TODO 用AJAX代替
+      let data = ['b', 'a', 'c']
+      const results = queryString
+        ? data.filter((item) => {
+          return item.toLowerCase().indexOf(queryString.toLowerCase()) >= 0
+        }) : data
+      // autocomplete只接收{value:xxx}的数组，所以要转换
+      cb(results.map(datum => {
+        return { value: datum }
+      }))
     }
   }
 }

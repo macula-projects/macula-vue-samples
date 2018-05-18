@@ -12,7 +12,7 @@
       </slot>
     </div>
     <div class="right">
-      <header-search class="action search" placeholder="站内搜索" v-model="searchValue" :data="searchData" @select="onSearchSelect"/>
+      <header-search class="action search" placeholder="站内搜索" v-model="searchValue" :fetch-sugesstions="fetchSugesstions" @select="onSearchSelect"/>
       <!--帮助-->
       <a target="_blank" href="helpurl" class="action">
         <ant-icon type="question-circle-o"/>
@@ -67,12 +67,7 @@ export default {
         return {}
       }
     },
-    searchData: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
+    fetchSugesstions: Function,
     collapsed: {
       type: Boolean
     },
