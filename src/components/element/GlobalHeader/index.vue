@@ -5,7 +5,7 @@
       <!-- LOGO -->
       <ant-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" class="trigger" @click="toggle" />
       <!-- 左边菜单，可以在外部用slot替换 -->
-      <slot name="top-menu">
+      <slot name="top-nav-menu">
         <el-menu>
           <el-menu-item index="1">首页</el-menu-item>
         </el-menu>
@@ -27,11 +27,13 @@
           <span class="name">{{currentUser.name}}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item disabled>个人中心</el-dropdown-item>
-          <el-dropdown-item disabled>设置</el-dropdown-item>
-          <el-dropdown-item divided command="logout">
-            退出登录
-          </el-dropdown-item>
+          <slot name="top-user-dropdown">
+            <el-dropdown-item disabled>个人中心</el-dropdown-item>
+            <el-dropdown-item disabled>设置</el-dropdown-item>
+            <el-dropdown-item divided command="logout">
+              退出登录
+            </el-dropdown-item>
+          </slot>
         </el-dropdown-menu>
       </el-dropdown>
       <div v-else class="action loading-wrapper">

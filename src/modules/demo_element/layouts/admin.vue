@@ -9,9 +9,9 @@
                        :notice-tabs="fetchNoticeTabs()"
                        :collapsed="collapsed"
                        :fetch-sugesstions="fetchSugesstions"
-                       v-on:search-select="handleSearchSelect"
+                       @search-select="handleSearchSelect"
                        @collapse="handleMenuCollapse">
-          <top-menu :menu-data="getMenuData()" slot="top-menu" />
+          <top-menu :menu-data="getMenuData()" slot="top-nav-menu" />
         </global-header>
       </el-header>
       <!-- Main -->
