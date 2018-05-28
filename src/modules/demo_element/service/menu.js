@@ -184,6 +184,7 @@ const topMenuData = [
     code: 'more',
     name: '更多',
     icon: anticon('more'),
+    path: 'abc',
     children: [
       {
         code: '403',
@@ -207,8 +208,11 @@ const topMenuData = [
 function formatter (data, parentPath = '/') {
   return data.map(item => {
     let { path } = item
-    if (!isUrl(path)) {
+    if (path && !isUrl(path)) {
       path = parentPath + item.path
+    }
+    if (!path) {
+      path = ''
     }
     const result = {
       ...item,
@@ -217,7 +221,7 @@ function formatter (data, parentPath = '/') {
     if (item.children) {
       result.children = formatter(
         item.children,
-        `${parentPath}${item.path}/`
+        item.path ? `${parentPath}${item.path}/` : `${parentPath}`
       )
     }
     return result

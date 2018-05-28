@@ -20,8 +20,7 @@ export default {
   methods: {
     getMenuItem (item) {
       let title = this.$createElement('span', { slot: 'title' }, item.name)
-      if (typeof (item.path) !== 'undefined') {
-        alert(item.name + ':' + typeof (item.path))
+      if (item.path && item.path.length > 0) {
         const itemPath = this.conversionPath(item.path)
         if (/^https?:\/\//.test(itemPath)) {
           title = this.$createElement('a',
