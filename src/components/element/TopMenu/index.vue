@@ -48,7 +48,7 @@ export default {
         'el-menu-item',
         {
           props: {
-            index: item.path
+            index: item.code
           },
           scopedSlots: {
             title: (props) => {

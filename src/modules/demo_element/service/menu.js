@@ -178,13 +178,13 @@ const topMenuData = [
   {
     code: 'porder',
     name: '订单中心',
+    path: 'porder',
     icon: anticon('porder')
   },
   {
     code: 'more',
     name: '更多',
     icon: anticon('more'),
-    path: 'abc',
     children: [
       {
         code: '403',
