@@ -84,41 +84,45 @@ export default {
       return keys
     },
     getMenuItem (item) {
-      const icon = this.$createElement('i', { class: `icon ${item.icon}` })
-      const title = this.$createElement('span', { slot: 'title' }, item.name)
-      const elMenuItem = this.$createElement(
-        'el-menu-item',
-        {
-          props: {
-            index: item.path
-          }
-        },
-        [item.icon && icon, title]
-      )
-
+      let title = this.$createElement('span', { slot: 'title' }, item.name)
       const itemPath = this.conversionPath(item.path)
       if (/^https?:\/\//.test(itemPath)) {
-        return this.$createElement(
-          'a',
+        title = this.$createElement('a',
           {
             attrs: {
               href: itemPath,
               target: item.target
             }
           },
-          [elMenuItem]
+          [item.name]
         )
-      } else {
-        return this.$createElement(
-          'router-link',
+      } else if (item.path) {
+        title = this.$createElement('router-link',
           {
             props: {
               to: itemPath
             }
           },
-          [elMenuItem]
+          [item.name]
         )
       }
+
+      return this.$createElement(
+        'el-menu-item',
+        {
+          props: {
+            index: item.path
+          },
+          scopedSlots: {
+            title: (props) => {
+              return [
+                item.icon && this.$createElement('i', { class: `icon ${item.icon}` }),
+                title
+              ]
+            }
+          }
+        }
+      )
     },
     getSubMenuOrItem (item, h) {
       if (item.children && item.children.some((child) => child.name)) {
@@ -128,16 +132,7 @@ export default {
             props: {
               index: item.path
             },
-            key: item.path,
-            scopedSlots: {
-              title: (props) => {
-                return [
-                  item.icon &&
-                    this.$createElement('i', { class: `icon ${item.icon}` }),
-                  this.$createElement('span', { slot: 'title' }, item.name)
-                ]
-              }
-            }
+            key: item.path
           },
           [
             h(

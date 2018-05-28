@@ -156,6 +156,53 @@ const menuData = [
   }
 ]
 
+const topMenuData = [
+  {
+    code: 'dashboard',
+    name: '首页',
+    icon: anticon('dashboard'),
+    path: 'dashboard'
+  },
+  {
+    code: 'admin',
+    name: '系统管理',
+    icon: anticon('admin'),
+    path: 'admin'
+  },
+  {
+    code: 'operation',
+    name: '运维管理',
+    icon: anticon('operation'),
+    path: 'operation'
+  },
+  {
+    code: 'porder',
+    name: '订单中心',
+    icon: anticon('porder')
+  },
+  {
+    code: 'more',
+    name: '更多',
+    icon: anticon('more'),
+    children: [
+      {
+        code: '403',
+        name: '403'
+      },
+      {
+        code: '404',
+        name: '404',
+        path: '404'
+      },
+      {
+        code: '500',
+        name: '500',
+        path: '500'
+      }
+    ]
+  }
+]
+
 // 拼接路径，将父亲和children中的path串起来
 function formatter (data, parentPath = '/') {
   return data.map(item => {
@@ -178,3 +225,5 @@ function formatter (data, parentPath = '/') {
 }
 
 export const getMenuData = () => formatter(menuData)
+
+export const getTopMenuData = () => formatter(topMenuData)

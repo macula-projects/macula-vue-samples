@@ -19,41 +19,48 @@ export default {
 
   methods: {
     getMenuItem (item) {
-      const icon = this.$createElement('i', { class: `icon ${item.icon}` })
-      const title = this.$createElement('span', { slot: 'title' }, item.name)
-      const elMenuItem = this.$createElement(
+      let title = this.$createElement('span', { slot: 'title' }, item.name)
+      if (typeof (item.path) !== 'undefined') {
+        alert(item.name + ':' + typeof (item.path))
+        const itemPath = this.conversionPath(item.path)
+        if (/^https?:\/\//.test(itemPath)) {
+          title = this.$createElement('a',
+            {
+              attrs: {
+                href: itemPath,
+                target: item.target
+              }
+            },
+            [item.name]
+          )
+        } else {
+          title = this.$createElement('router-link',
+            {
+              props: {
+                to: itemPath
+              }
+            },
+            [item.name]
+          )
+        }
+      }
+
+      return this.$createElement(
         'el-menu-item',
         {
           props: {
             index: item.path
+          },
+          scopedSlots: {
+            title: (props) => {
+              return [
+                item.icon && this.$createElement('i', { class: `icon ${item.icon}` }),
+                title
+              ]
+            }
           }
-        },
-        [item.icon && icon, title]
+        }
       )
-
-      const itemPath = this.conversionPath(item.path)
-      if (/^https?:\/\//.test(itemPath)) {
-        return this.$createElement(
-          'a',
-          {
-            attrs: {
-              href: itemPath,
-              target: item.target
-            }
-          },
-          [elMenuItem]
-        )
-      } else {
-        return this.$createElement(
-          'router-link',
-          {
-            props: {
-              to: itemPath
-            }
-          },
-          [elMenuItem]
-        )
-      }
     },
     getSubMenuOrItem (item, h) {
       if (item.children && item.children.some((child) => child.name)) {
@@ -63,16 +70,7 @@ export default {
             props: {
               index: item.path
             },
-            key: item.path,
-            scopedSlots: {
-              title: (props) => {
-                return [
-                  item.icon &&
-                    this.$createElement('i', { class: `icon ${item.icon}` }),
-                  this.$createElement('span', { slot: 'title' }, item.name)
-                ]
-              }
-            }
+            key: item.path
           },
           [
             h(

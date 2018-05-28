@@ -11,7 +11,7 @@
                        :fetch-sugesstions="fetchSugesstions"
                        @search-select="handleSearchSelect"
                        @collapse="handleMenuCollapse">
-          <top-menu :menu-data="getMenuData()" slot="top-nav-menu" />
+          <top-menu :menu-data="getTopMenuData()" slot="top-nav-menu" />
         </global-header>
       </el-header>
       <!-- Main -->
@@ -27,7 +27,7 @@ import {Container, Header, Main, Menu, MenuItem, Submenu} from 'element-ui'
 import GlobalHeader from '@components/element/GlobalHeader'
 import SiderMenu from '@components/element/SiderMenu'
 import TopMenu from '@components/element/TopMenu'
-import { getMenuData } from '../service/menu'
+import { getMenuData, getTopMenuData } from '../service/menu'
 import { fetchNoticeTabs } from '../service/notice'
 import logo from '@assets/element/images/logo.png'
 
@@ -77,6 +77,9 @@ export default {
     },
     getMenuData () {
       return getMenuData()
+    },
+    getTopMenuData () {
+      return getTopMenuData()
     },
     fetchNoticeTabs () {
       return fetchNoticeTabs()
