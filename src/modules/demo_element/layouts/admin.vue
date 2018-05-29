@@ -1,7 +1,7 @@
 <template>
   <el-container class="app-container">
     <!-- 左栏菜单 -->
-    <sider-menu :collapsed="collapsed" :logo="logo" :menu-data="getMenuData()"/>
+    <sider-menu :collapsed="collapsed" :logo="logo" topTitle='GBSS ADMIN' defaultActive='home' :menu-data="getMenuData()"/>
     <el-container>
       <!--全局头部-->
       <el-header :style="{padding: 0}" height="50px">

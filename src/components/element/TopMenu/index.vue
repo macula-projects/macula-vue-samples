@@ -14,7 +14,8 @@ export default {
       default () {
         return []
       }
-    }
+    },
+    defaultActive: String
   },
 
   methods: {
@@ -67,9 +68,9 @@ export default {
           'el-submenu',
           {
             props: {
-              index: item.path
+              index: item.code
             },
-            key: item.path
+            key: item.code
           },
           [
             h(
@@ -110,12 +111,14 @@ export default {
     }
   },
   render (h) {
+    const {defaultActive} = this
     return h(
       'el-menu',
       {
         props: {
           mode: 'horizontal',
-          'background-color': '#fff'
+          'background-color': '#fff',
+          'default-active': defaultActive || 'home'
         }
       },
       this.getNavMenuItems(this.menuData, h)

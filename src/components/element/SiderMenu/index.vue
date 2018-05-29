@@ -30,6 +30,7 @@ export default {
       }
     },
     logo: String,
+    topTitle: String,
     Authorized: Function
   },
   data () {
@@ -79,32 +80,36 @@ export default {
         if (item.children) {
           keys = keys.concat(this.getFlatMenuKeys(item.children))
         }
-        keys.push(item.path)
+        if (item.path) {
+          keys.push(item.path)
+        }
       })
       return keys
     },
     getMenuItem (item) {
       let title = this.$createElement('span', { slot: 'title' }, item.name)
-      const itemPath = this.conversionPath(item.path)
-      if (/^https?:\/\//.test(itemPath)) {
-        title = this.$createElement('a',
-          {
-            attrs: {
-              href: itemPath,
-              target: item.target
-            }
-          },
-          [item.name]
-        )
-      } else if (item.path) {
-        title = this.$createElement('router-link',
-          {
-            props: {
-              to: itemPath
-            }
-          },
-          [item.name]
-        )
+      if (item.path && item.path.length > 0) {
+        const itemPath = this.conversionPath(item.path)
+        if (/^https?:\/\//.test(itemPath)) {
+          title = this.$createElement('a',
+            {
+              attrs: {
+                href: itemPath,
+                target: item.target
+              }
+            },
+            [item.name]
+          )
+        } else {
+          title = this.$createElement('router-link',
+            {
+              props: {
+                to: itemPath
+              }
+            },
+            [item.name]
+          )
+        }
       }
 
       return this.$createElement(
@@ -132,7 +137,7 @@ export default {
             props: {
               index: item.path
             },
-            key: item.path
+            key: item.code
           },
           [
             h(
@@ -190,7 +195,7 @@ export default {
     }
   },
   render (h) {
-    const { collapsed, logo, openKeys } = this
+    const { collapsed, logo, openKeys, topTitle } = this
     // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys().filter(item => item)
     if (!selectedKeys.length) {
@@ -229,7 +234,7 @@ export default {
                     src: logo
                   }
                 }),
-                h('h1', 'Element UI Pro')
+                h('h1', topTitle || 'Macula UI Pro')
               ]
             )
           ]

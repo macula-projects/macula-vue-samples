@@ -158,16 +158,16 @@ const menuData = [
 
 const topMenuData = [
   {
-    code: 'dashboard',
+    code: 'home',
     name: '首页',
-    icon: anticon('dashboard'),
-    path: 'dashboard'
+    icon: anticon('home'),
+    path: 'http://localhost:8080/demo_element.html'
   },
   {
     code: 'admin',
     name: '系统管理',
     icon: anticon('admin'),
-    path: 'admin'
+    path: 'https://www.infinitus.com.cn'
   },
   {
     code: 'operation',
@@ -187,18 +187,13 @@ const topMenuData = [
     icon: anticon('more'),
     children: [
       {
-        code: '403',
-        name: '403'
+        code: 'more1',
+        name: '更多一'
       },
       {
-        code: '404',
-        name: '404',
-        path: '404'
-      },
-      {
-        code: '500',
-        name: '500',
-        path: '500'
+        code: 'more2',
+        name: '更多二',
+        path: 'more/more2'
       }
     ]
   }
@@ -208,10 +203,10 @@ const topMenuData = [
 function formatter (data, parentPath = '/') {
   return data.map(item => {
     let { path } = item
-    if (path && !isUrl(path)) {
+    if (item.path && !isUrl(item.path)) {
       path = parentPath + item.path
     }
-    if (!path) {
+    if (!item.path) {
       path = ''
     }
     const result = {
