@@ -23,7 +23,7 @@
 import EpList from '../List/index'
 import EpListItem from '../List/ListItem'
 import EpListItemMeta from '../List/ListItemMeta'
-import Avatar from '../Avatar/index'
+import Avatar from '../Avatar'
 export default {
   props: {
     data: {

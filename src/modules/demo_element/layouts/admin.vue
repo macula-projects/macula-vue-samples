@@ -1,17 +1,17 @@
 <template>
   <el-container class="app-container">
     <!-- 左栏菜单 -->
-    <sider-menu :collapsed="collapsed" :logo="logo" topTitle='GBSS ADMIN' defaultActive='home' :menu-data="getMenuData()"/>
+    <sider-menu :collapsed="collapsed" :logo="logo" title='GBSS ADMIN' defaultActive='home' :menu-data="getMenuData()"/>
     <el-container>
       <!--全局头部-->
       <el-header :style="{padding: 0}" height="50px">
         <global-header :current-user="currentUser"
+                       :menu-data="getTopMenuData()"
                        :notice-tabs="fetchNoticeTabs()"
                        :collapsed="collapsed"
                        :fetch-sugesstions="fetchSugesstions"
                        @search-select="handleSearchSelect"
                        @collapse="handleMenuCollapse">
-          <top-menu :menu-data="getTopMenuData()" slot="top-nav-menu" />
         </global-header>
       </el-header>
       <!-- Main -->

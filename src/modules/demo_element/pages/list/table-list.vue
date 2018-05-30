@@ -1,39 +1,38 @@
 <template>
-  <el-table
-    :data='tableData3'
-    height='250'
-    border
-    style='width: 100%'>
-    <el-table-column
-      prop='date'
-      label='日期'
-      width='180'>
-    </el-table-column>
-    <el-table-column
-      prop='name'
-      label='姓名'
-      width='180'>
-    </el-table-column>
-    <el-table-column
-      prop='address'
-      label='地址'>
-    </el-table-column>
-  </el-table>
+  <div>
+    <page-header
+      title="查询表格"
+    />
+    <el-card>
+      <el-table
+        :data='tableData3'
+        height='250'
+        border
+        style='width: 100%'>
+        <el-table-column prop='date' label='日期' width='180'/>
+        <el-table-column prop='name' label='姓名' width='180'/>
+        <el-table-column prop='address' label='地址'/>
+      </el-table>
+    </el-card>
+  </div>
 </template>
 
 <routeMeta>
   {
     title: '表格',
-    layout: 'layout-admin'
+    layout: 'layout-front'
   }
 </routeMeta>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
+import { Table, TableColumn, Card } from 'element-ui'
+import PageHeader from '@components/element/PageHeader'
 export default {
   components: {
     [Table.name]: Table,
-    [TableColumn.name]: TableColumn
+    [TableColumn.name]: TableColumn,
+    [Card.name]: Card,
+    [PageHeader.name]: PageHeader
   },
   data () {
     return {

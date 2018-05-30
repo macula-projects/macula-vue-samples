@@ -4,12 +4,7 @@ import * as pathToRegexp from 'path-to-regexp'
 
 import { urlToList } from '@assets/element/js/utils/pathTools'
 
-Vue.use(Breadcrumb)
-Vue.use(BreadcrumbItem)
-Vue.use(Tabs)
-Vue.use(TabPane)
-
-export function getBreadcrumb(breadcrumbNameMap, url) {
+export function getBreadcrumb (breadcrumbNameMap, url) {
   let breadcrumb = breadcrumbNameMap[url]
   if (!breadcrumb) {
     Object.keys(breadcrumbNameMap).forEach(item => {
@@ -24,6 +19,12 @@ export function getBreadcrumb(breadcrumbNameMap, url) {
 export default {
   name: 'PageHeader',
   componentName: 'PageHeader',
+  components: {
+    [Breadcrumb.name]: Breadcrumb,
+    [BreadcrumbItem.name]: BreadcrumbItem,
+    [Tabs.name]: Tabs,
+    [TabPane.name]: TabPane
+  },
   props: {
     title: [String, Array],
     logo: [String, Array],
@@ -41,11 +42,11 @@ export default {
     tabActiveKey: String
   },
   methods: {
-    onChange(tab) {
+    onChange (tab) {
       const key = tab.name
       this.$emit('tab-change', key)
     },
-    renderItem(linkElement, href, title) {
+    renderItem (linkElement, href, title) {
       return this.$createElement(
         linkElement,
         {
@@ -55,7 +56,7 @@ export default {
         title
       )
     },
-    conversionFromProps() {
+    conversionFromProps () {
       const { breadcrumbList, breadcrumbSeparator, linkElement } = this
       return this.$createElement(
         'el-breadcrumb',
@@ -80,7 +81,7 @@ export default {
         })
       )
     },
-    conversionFromLocation(routerPath, breadcrumbNameMap) {
+    conversionFromLocation (routerPath, breadcrumbNameMap) {
       const { breadcrumbSeparator, linkElement } = this
       // Convert the url to an array
       const pathSnippets = urlToList(routerPath)
@@ -127,8 +128,8 @@ export default {
         extraBreadcrumbItems
       )
     },
-    conversionBreadcrumbList() {
-      const { breadcrumbList, breadcrumbSeparator, breadcrumbNameMap } = this
+    conversionBreadcrumbList () {
+      const { breadcrumbList, breadcrumbNameMap } = this
       const routerPath = this.$route.path
       if (breadcrumbList && breadcrumbList.length) {
         return this.conversionFromProps()
@@ -137,7 +138,7 @@ export default {
         return this.conversionFromLocation(routerPath, breadcrumbNameMap)
       }
     },
-    renderTabs() {
+    renderTabs () {
       const { tabList, tabActiveKey } = this
       return this.$createElement(
         'el-tabs',
@@ -169,7 +170,6 @@ export default {
         class: 'page-header'
       },
       [
-        this.conversionBreadcrumbList(),
         h(
           'div',
           {
@@ -210,7 +210,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~theme/theme.scss';
+@import '~@assets/element/scss/theme.scss';
 
 .page-header {
   background: $component-background;

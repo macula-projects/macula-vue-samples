@@ -3,13 +3,16 @@
     <!--头部左边-->
     <div class="left">
       <!-- LOGO -->
+      <div class='logo' v-if="logo" :style="{width : collapsed ? '64px' : '256px'}">
+        <router-link to='/'>
+          <img alt='logo' :src=logo />
+          <h1>{{title || 'Macula UI Pro'}}</h1>
+        </router-link>
+      </div>
+
       <ant-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" class="trigger" @click="toggle" />
-      <!-- 左边菜单，可以在外部用slot替换 -->
-      <slot name="top-nav-menu">
-        <el-menu>
-          <el-menu-item index="1">首页</el-menu-item>
-        </el-menu>
-      </slot>
+      <!-- 顶部左边菜单 -->
+      <top-menu :menu-data="menus" />
     </div>
     <div class="right">
       <header-search class="action search" placeholder="站内搜索" v-model="searchValue" :fetch-sugesstions="fetchSugesstions" @select="onSearchSelect"/>
@@ -46,10 +49,11 @@
 <script>
 import { debounce } from 'lodash'
 import { Loading, Dropdown, DropdownItem, DropdownMenu } from 'element-ui'
-import Avatar from '../Avatar/index'
-import AntIcon from '../AntIcon/index'
-import HeaderSearch from '../HeaderSearch/index'
-import NoticeIcon from '../NoticeIcon/index'
+import Avatar from '../Avatar'
+import AntIcon from '../AntIcon'
+import HeaderSearch from '../HeaderSearch'
+import TopMenu from '../TopMenu'
+import NoticeIcon from '../NoticeIcon'
 
 export default {
   name: 'GlobalHeader',
@@ -62,9 +66,16 @@ export default {
     Avatar,
     HeaderSearch,
     NoticeIcon,
-    AntIcon
+    AntIcon,
+    TopMenu
   },
   props: {
+    menuData: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
     currentUser: {
       type: Object,
       default () {
@@ -82,6 +93,8 @@ export default {
       }
     },
     isMobile: Boolean,
+    logo: String,
+    title: String,
     width: {
       type: String,
       default () {
@@ -92,6 +105,11 @@ export default {
   data () {
     return {
       searchValue: ''
+    }
+  },
+  computed: {
+    menus () {
+      return this.menuData
     }
   },
   watch: {
@@ -129,7 +147,7 @@ export default {
 .global-header {
   height: 50px;
   padding: 0 12px 0 0;
-  background: #fff;
+  background:#fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   position: relative;
   display: flex;
@@ -137,6 +155,29 @@ export default {
   .left {
     height: 100%;
     display: flex;
+    .logo {
+      height: 50px;
+      position: relative;
+      line-height: 50px;
+      padding-left: 24px;
+      background: #002140;
+      transition: all 0.3s;
+      overflow: hidden;
+      img {
+        display: inline-block;
+        vertical-align: middle;
+        height: 32px;
+      }
+      h1 {
+        color: #fff;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 20px;
+        margin: 0 0 0 12px;
+        // font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-weight: 600;
+      }
+    }
     .trigger {
       font-size: 20px;
       line-height: 50px;

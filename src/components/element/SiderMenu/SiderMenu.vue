@@ -31,7 +31,7 @@ export default {
       }
     },
     logo: String,
-    topTitle: String,
+    title: String,
     Authorized: Function
   },
   data () {
@@ -168,7 +168,7 @@ export default {
     }
   },
   render (h) {
-    const { collapsed, logo, openKeys, topTitle, menuData } = this
+    const { collapsed, logo, openKeys, title, menuData } = this
     // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys().filter(item => item)
     if (!selectedKeys.length) {
@@ -178,12 +178,16 @@ export default {
 
     return (
       <el-aside class={collapsed ? 'sider collapse' : 'sider'} width={collapsed ? '64px' : '256px'}>
-        <div class='logo'>
-          <router-link to='/'>
-            <img alt='logo' src={logo} />
-            <h1>{topTitle || 'Macula UI Pro'}</h1>
-          </router-link>
-        </div>
+        {
+          logo ? (
+            <div class='logo'>
+              <router-link to='/'>
+                <img alt='logo' src={logo} />
+                <h1>{title || 'Macula UI Pro'}</h1>
+              </router-link>
+            </div>
+          ) : ''
+        }
         <el-menu mode='vertical' unique-opened={true} collapse={collapsed} collapseTransition={false} default-active={selectedKey} default-openeds={openKeys}>
           {this.getNavMenuItems(menuData)}
         </el-menu>
@@ -198,7 +202,7 @@ export default {
 
 .sider {
   // height: 100%;
-  min-height: 100vh;
+  // min-height: 100vh;
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   position: relative;
   z-index: 10;
