@@ -25,7 +25,7 @@
 <script>
 import { Badge, Popover, Button, Tabs, TabPane } from 'element-ui'
 import * as moment from 'moment'
-import NoticeList from './NoticeList.vue'
+import NoticeList from './NoticeList'
 
 export default {
   components: {

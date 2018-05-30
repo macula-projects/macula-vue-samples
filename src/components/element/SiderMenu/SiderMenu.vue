@@ -12,6 +12,7 @@ export const getMenuMatchKeys = (flatMenuKeys, path) => {
 
 export default {
   name: 'SiderMenu',
+  componentName: 'SiderMenu',
   components: {
     [Aside.name]: Aside,
     [Menu.name]: Menu,

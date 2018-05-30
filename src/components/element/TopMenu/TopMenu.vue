@@ -3,6 +3,7 @@ import { Menu, MenuItem, Submenu } from 'element-ui'
 
 export default {
   name: 'TopMenu',
+  componentName: 'TopMenu',
   components: {
     [Menu.name]: Menu,
     [MenuItem.name]: MenuItem,

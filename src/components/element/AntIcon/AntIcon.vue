@@ -1,7 +1,8 @@
 
 <script>
 export default {
-  name: 'ant-icon',
+  name: 'AntIcon',
+  componentName: 'AntIcon',
   props: {
     type: {
       type: String,

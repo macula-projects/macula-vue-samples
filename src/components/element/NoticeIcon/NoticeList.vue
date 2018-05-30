@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import EpList from '../List/index.vue'
-import EpListItem from '../List/ListItem.vue'
-import EpListItemMeta from '../List/ListItemMeta.vue'
-import Avatar from '../Avatar/index.vue'
+import EpList from '../List/index'
+import EpListItem from '../List/ListItem'
+import EpListItemMeta from '../List/ListItemMeta'
+import Avatar from '../Avatar/index'
 export default {
   props: {
     data: {

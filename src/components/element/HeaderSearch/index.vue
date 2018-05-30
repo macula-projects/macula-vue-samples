@@ -19,7 +19,7 @@ export default {
   },
   props: {
     fetchSugesstions: Function
-  },  
+  },
   data () {
     return {
       searchMode: false,

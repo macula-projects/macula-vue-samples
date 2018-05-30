@@ -46,12 +46,14 @@
 <script>
 import { debounce } from 'lodash'
 import { Loading, Dropdown, DropdownItem, DropdownMenu } from 'element-ui'
-import Avatar from '../Avatar/index.vue'
-import AntIcon from '../AntIcon/index.vue'
-import HeaderSearch from '../HeaderSearch/index.vue'
-import NoticeIcon from '../NoticeIcon/index.vue'
+import Avatar from '../Avatar/index'
+import AntIcon from '../AntIcon/index'
+import HeaderSearch from '../HeaderSearch/index'
+import NoticeIcon from '../NoticeIcon/index'
 
 export default {
+  name: 'GlobalHeader',
+  componentName: 'GlobalHeader',
   components: {
     [Loading.name]: Loading,
     [Dropdown.name]: Dropdown,
