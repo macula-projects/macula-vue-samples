@@ -19,87 +19,6 @@ export default {
   },
 
   methods: {
-    getMenuItem (item) {
-      let title = this.$createElement('span', { slot: 'title' }, item.name)
-      if (item.path && item.path.length > 0) {
-        const itemPath = this.conversionPath(item.path)
-        if (/^https?:\/\//.test(itemPath)) {
-          title = this.$createElement('a',
-            {
-              attrs: {
-                href: itemPath,
-                target: item.target
-              }
-            },
-            [item.name]
-          )
-        } else {
-          title = this.$createElement('router-link',
-            {
-              props: {
-                to: itemPath
-              }
-            },
-            [item.name]
-          )
-        }
-      }
-
-      return this.$createElement(
-        'el-menu-item',
-        {
-          props: {
-            index: item.code
-          },
-          scopedSlots: {
-            title: (props) => {
-              return [
-                item.icon && this.$createElement('i', { class: `icon ${item.icon}` }),
-                title
-              ]
-            }
-          }
-        }
-      )
-    },
-    getSubMenuOrItem (item, h) {
-      if (item.children && item.children.some((child) => child.name)) {
-        return this.$createElement(
-          'el-submenu',
-          {
-            props: {
-              index: item.code
-            },
-            key: item.code
-          },
-          [
-            h(
-              'template',
-              { slot: 'title' },
-              [
-                item.icon && this.$createElement('i', { class: `icon ${item.icon}` }),
-                this.$createElement('span', { slot: 'title' }, item.name)
-              ]
-            ),
-            this.getNavMenuItems(item.children)
-          ]
-        )
-      } else {
-        return this.getMenuItem(item)
-      }
-    },
-    getNavMenuItems (menusData, h) {
-      if (!menusData) {
-        return []
-      }
-      return menusData
-        .filter(item => item.name && !item.hideInMenu)
-        .map(item => {
-          // make dom
-          return this.getSubMenuOrItem(item, h)
-        })
-        .filter(item => item)
-    },
     // conversion Path
     // 转化路径
     conversionPath (path) {
@@ -108,20 +27,67 @@ export default {
       } else {
         return `/${path || ''}`.replace(/\/+/g, '/')
       }
+    },
+    handOnItemClick (e) {
+      let menuItemTitle = this.$refs[e.$attrs.itemcode]
+      if (menuItemTitle) {
+        if (menuItemTitle.$el) {
+          menuItemTitle.$el.click()
+        } else {
+          menuItemTitle.click()
+        }
+      }
+    },
+    getSubMenuOrItem (item) {
+      if (item.children && item.children.some((child) => child.name)) {
+        return (
+          <el-submenu index={'"' + item.code + '"'} key={item.code}>
+            <template slot='title'>
+              {item.icon && <i class='icon ' {...{class: item.icon}} />}
+              <span>{item.name}</span>
+            </template>
+            {this.getNavMenuItems(item.children)}
+          </el-submenu>
+        )
+      } else {
+        let title = <span ref={item.code}>{item.name}</span>
+        if (item.path && item.path.length > 0) {
+          const itemPath = this.conversionPath(item.path)
+          if (/^https?:\/\//.test(itemPath)) {
+            title = <a href={itemPath} target={item.target} ref={item.code}>{item.name}</a>
+          } else {
+            title = <router-link to={itemPath} ref={item.code}>{item.name}</router-link>
+          }
+        }
+
+        return (
+          <el-menu-item index={item.code} itemcode={item.code} onClick={this.handOnItemClick}>
+            <template slot='title'>
+              {item.icon && <i class='icon ' {...{class: item.icon}} />}
+              {title}
+            </template>
+          </el-menu-item>
+        )
+      }
+    },
+    getNavMenuItems (menusData) {
+      if (!menusData) {
+        return []
+      }
+      return menusData
+        .filter(item => item.name && !item.hideInMenu)
+        .map(item => {
+          // make dom
+          return this.getSubMenuOrItem(item)
+        }).filter(item => item)
     }
   },
   render (h) {
-    const {defaultActive} = this
-    return h(
-      'el-menu',
-      {
-        props: {
-          mode: 'horizontal',
-          'background-color': '#fff',
-          'default-active': defaultActive || 'home'
-        }
-      },
-      this.getNavMenuItems(this.menuData, h)
+    const {defaultActive, menuData} = this
+    return (
+      <el-menu mode='horizontal' background-color='#fff' default-active={defaultActive || 'home'}>
+        {this.getNavMenuItems(menuData)}
+      </el-menu>
     )
   }
 }

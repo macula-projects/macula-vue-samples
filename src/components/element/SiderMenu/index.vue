@@ -86,88 +86,6 @@ export default {
       })
       return keys
     },
-    getMenuItem (item) {
-      let title = this.$createElement('span', { slot: 'title' }, item.name)
-      if (item.path && item.path.length > 0) {
-        const itemPath = this.conversionPath(item.path)
-        if (/^https?:\/\//.test(itemPath)) {
-          title = this.$createElement('a',
-            {
-              attrs: {
-                href: itemPath,
-                target: item.target
-              }
-            },
-            [item.name]
-          )
-        } else {
-          title = this.$createElement('router-link',
-            {
-              props: {
-                to: itemPath
-              }
-            },
-            [item.name]
-          )
-        }
-      }
-
-      return this.$createElement(
-        'el-menu-item',
-        {
-          props: {
-            index: item.path
-          },
-          scopedSlots: {
-            title: (props) => {
-              return [
-                item.icon && this.$createElement('i', { class: `icon ${item.icon}` }),
-                title
-              ]
-            }
-          }
-        }
-      )
-    },
-    getSubMenuOrItem (item, h) {
-      if (item.children && item.children.some((child) => child.name)) {
-        return this.$createElement(
-          'el-submenu',
-          {
-            props: {
-              index: item.path
-            },
-            key: item.code
-          },
-          [
-            h(
-              'template',
-              { slot: 'title' },
-              [
-                item.icon && this.$createElement('i', { class: `icon ${item.icon}` }),
-                this.$createElement('span', { slot: 'title' }, item.name)
-              ]
-            ),
-            this.getNavMenuItems(item.children)
-          ]
-        )
-      } else {
-        return this.getMenuItem(item)
-      }
-    },
-    getNavMenuItems (menusData, h) {
-      if (!menusData) {
-        return []
-      }
-      return menusData
-        .filter(item => item.name && !item.hideInMenu)
-        .map(item => {
-          // make dom
-          const ItemDom = this.getSubMenuOrItem(item, h)
-          return this.checkPermissionItem(item.authority, ItemDom)
-        })
-        .filter(item => item)
-    },
     // Get the currently selected menu
     getSelectedMenuKeys () {
       const pathname = this.$route.path
@@ -192,72 +110,83 @@ export default {
         return check(authority, ItemDom)
       }
       return ItemDom
+    },
+    handOnItemClick (e) {
+      let menuItemTitle = this.$refs[e.$attrs.itemcode]
+      if (menuItemTitle) {
+        if (menuItemTitle.$el) {
+          menuItemTitle.$el.click()
+        } else {
+          menuItemTitle.click()
+        }
+      }
+    },
+    getSubMenuOrItem (item) {
+      if (item.children && item.children.some((child) => child.name)) {
+        return (
+          <el-submenu index={item.path} key={item.code}>
+            <template slot='title'>
+              {item.icon && <i class='icon ' {...{class: item.icon}} />}
+              <span>{item.name}</span>
+            </template>
+            {this.getNavMenuItems(item.children)}
+          </el-submenu>
+        )
+      } else {
+        let title = <span ref={item.code}>{item.name}</span>
+        if (item.path && item.path.length > 0) {
+          const itemPath = this.conversionPath(item.path)
+          if (/^https?:\/\//.test(itemPath)) {
+            title = <a href={itemPath} target={item.target} ref={item.code}>{item.name}</a>
+          } else {
+            title = <router-link to={itemPath} ref={item.code}>{item.name}</router-link>
+          }
+        }
+
+        return (
+          <el-menu-item index={item.path} itemcode={item.code} onClick={this.handOnItemClick}>
+            <template slot='title'>
+              {item.icon && <i class='icon ' {...{class: item.icon}} />}
+              {title}
+            </template>
+          </el-menu-item>
+        )
+      }
+    },
+    getNavMenuItems (menusData) {
+      if (!menusData) {
+        return []
+      }
+      return menusData
+        .filter(item => item.name && !item.hideInMenu)
+        .map(item => {
+          // make dom
+          const ItemDom = this.getSubMenuOrItem(item)
+          return this.checkPermissionItem(item.authority, ItemDom)
+        }).filter(item => item)
     }
   },
   render (h) {
-    const { collapsed, logo, openKeys, topTitle } = this
+    const { collapsed, logo, openKeys, topTitle, menuData } = this
     // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys().filter(item => item)
     if (!selectedKeys.length) {
       selectedKeys = [openKeys[openKeys.length - 1]]
     }
     const selectedKey = selectedKeys[selectedKeys.length - 1]
-    return h(
-      'el-aside',
-      {
-        class: {
-          sider: true,
-          collapse: collapsed
-        },
-        props: {
-          width: collapsed ? '64px' : '256px'
-        }
-      },
-      [
-        h(
-          'div',
-          {
-            class: 'logo'
-          },
-          [
-            h(
-              'router-link',
-              {
-                props: {
-                  to: '/'
-                }
-              },
-              [
-                h('img', {
-                  attrs: {
-                    alt: 'logo',
-                    src: logo
-                  }
-                }),
-                h('h1', topTitle || 'Macula UI Pro')
-              ]
-            )
-          ]
-        ),
-        h(
-          'el-menu',
-          {
-            props: {
-              mode: 'vertical',
-              'unique-opened': true,
-              collapse: collapsed,
-              collapseTransition: false,
-              'default-active': selectedKey,
-              'default-openeds': openKeys
-            },
-            style: {
-              padding: '16px 0',
-              width: '100%'
-            }
-          },
-          this.getNavMenuItems(this.menuData, h)
-        )
-      ]
+
+    return (
+      <el-aside class={collapsed ? 'sider collapse' : 'sider'} width={collapsed ? '64px' : '256px'}>
+        <div class='logo'>
+          <router-link to='/'>
+            <img alt='logo' src={logo} />
+            <h1>{topTitle || 'Macula UI Pro'}</h1>
+          </router-link>
+        </div>
+        <el-menu mode='vertical' unique-opened={true} collapse={collapsed} collapseTransition={false} default-active={selectedKey} default-openeds={openKeys}>
+          {this.getNavMenuItems(menuData)}
+        </el-menu>
+      </el-aside>
     )
   }
 }
