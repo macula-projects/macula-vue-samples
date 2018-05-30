@@ -12,17 +12,19 @@
 import { Autocomplete } from 'element-ui'
 
 export default {
+  name: 'HeaderSearch',
+  componentName: 'HeaderSearch',
   components: {
     [Autocomplete.name]: Autocomplete
   },
+  props: {
+    fetchSugesstions: Function
+  },  
   data () {
     return {
       searchMode: false,
       value: ''
     }
-  },
-  props: {
-    fetchSugesstions: Function
   },
   methods: {
     toggleSearchMode () {
