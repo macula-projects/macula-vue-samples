@@ -86,7 +86,7 @@ export default {
   render (h) {
     const {defaultActive, menuData} = this
     return (
-      <el-menu mode='horizontal' background-color='#fff' default-active={defaultActive || 'home'}>
+      <el-menu mode='horizontal' default-active={defaultActive || 'home'}>
         {this.getNavMenuItems(menuData)}
       </el-menu>
     )
@@ -99,14 +99,62 @@ export default {
 
 .el-menu--horizontal {
   border: none;
+  color: #303133;
+  background: #fff;
+  &>.el-menu {
+    &>.el-menu-item {
+      &:hover {
+        color: inherit;
+        background-color: $primary-1;
+      }
+    }
+  }
   &>.el-menu-item {
       height: 50px;
       line-height: 50px;
+      color: inherit;
+      i {
+        color: inherit;
+      }
+      > a {
+        color: inherit;
+        text-decoration: none;
+        outline: none;
+      }
+      &:hover {
+        color: inherit;
+        background-color: $primary-1;
+        i {
+          color: inherit;
+        }
+        > a {
+          color: inherit;
+        }
+      }
+      &.is-active {
+        border-bottom: 2px solid #409eff;
+      }
   }
   &>.el-submenu {
       /deep/ .el-submenu__title {
         height: 50px;
         line-height: 50px;
+        color: inherit;
+        > i {
+          color: inherit;
+        }
+        &:hover {
+          color: inherit;
+          background-color: $primary-1;
+          > i {
+            color: inherit;
+          }
+        }
+      }
+      &.is-active {
+        > .el-submenu__title {
+          border-bottom: 2px solid #409eff;
+        }
       }
       .icon {
         margin-right: 10px;

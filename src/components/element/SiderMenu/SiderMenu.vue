@@ -213,34 +213,36 @@ export default {
     color: $menu-dark-color;
     background: $menu-dark-bg;
     border-right: 0;
-
+    &--inline {
+      background: #000c17;
+    }
     &-item {
-      color: $menu-dark-color;
+      color: inherit;
       i {
-        color: $menu-dark-color;
+        color: inherit;
+      }
+      > a {
+        color: inherit;
+        text-decoration: none;
+        outline: none;
       }
       &:hover {
         color: #fff;
-        background-color: #2d5b86;
-        > a {
-          color: #fff;
-        }
+        background-color: #000c17;
         i {
-          color: #fff;
+          color: inherit;
         }
-      }
-      > a {
-        color: $menu-dark-color;
-        text-decoration: none;
-        outline: none;
+        > a {
+          color: inherit;
+        }
       }
       &.is-active {
         color: #fff;
         background-color: #1890ff;
-        > a {
-          color: #fff;
-        }
         i {
+          color: inherit;
+        }
+        > a {
           color: inherit;
         }
       }
@@ -250,15 +252,15 @@ export default {
       &__title {
         height: 44px;
         line-height: 44px;
-        color: $menu-dark-color;
+        color: inherit;
         > i {
-          color: $menu-dark-color;
+          color: inherit;
         }
         &:hover {
           color: #fff;
-          background-color: #2d5b86;
+          background-color: $menu-dark-bg;
           > i {
-            color: #fff;
+            color: inherit;
           }
         }
 
