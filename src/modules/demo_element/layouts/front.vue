@@ -16,7 +16,7 @@
       <!-- 左栏菜单 -->
       <sider-menu :collapsed="collapsed" defaultActive='home' :menu-data="getMenuData()" @collapse="handleMenuCollapse"/>
       <!-- Main -->
-      <el-main :style="{'padding-bottom': 0}">
+      <el-main>
         <router-view/>
       </el-main>
     </el-container>
@@ -106,6 +106,9 @@ export default {
   position: relative;
   height: 100%;
   // background: $layout-body-background;
+  .el-main {
+    padding: 0;
+  }
 }
 .github-icon {
   font-size: 20px;

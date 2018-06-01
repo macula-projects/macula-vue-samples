@@ -304,6 +304,10 @@ export default {
     .logo {
       padding-left: 16px;
     }
+    .sider-trigger {
+      justify-content: center;
+      padding: 0;
+    }
   }
   .logo {
     height: 50px;
@@ -333,7 +337,8 @@ export default {
     height: 30px;
     color: #fff;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    padding-right: 18px;
     cursor: pointer;
     .trigger {
       font-size: 16px;

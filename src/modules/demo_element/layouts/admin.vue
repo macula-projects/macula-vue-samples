@@ -110,6 +110,9 @@ export default {
   position: relative;
   height: 100%;
   // background: $layout-body-background;
+  .el-main {
+    padding: 0;
+  }
 }
 .github-icon {
   font-size: 20px;

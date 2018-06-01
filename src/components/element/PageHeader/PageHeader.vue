@@ -1,27 +1,10 @@
 <script>
-import { Breadcrumb, BreadcrumbItem, Tabs, TabPane } from 'element-ui'
-import * as pathToRegexp from 'path-to-regexp'
-
-import { urlToList } from '@assets/element/js/utils/pathTools'
-
-export function getBreadcrumb (breadcrumbNameMap, url) {
-  let breadcrumb = breadcrumbNameMap[url]
-  if (!breadcrumb) {
-    Object.keys(breadcrumbNameMap).forEach(item => {
-      if (pathToRegexp(item).test(url)) {
-        breadcrumb = breadcrumbNameMap[item]
-      }
-    })
-  }
-  return breadcrumb || {}
-}
+import { Tabs, TabPane } from 'element-ui'
 
 export default {
   name: 'PageHeader',
   componentName: 'PageHeader',
   components: {
-    [Breadcrumb.name]: Breadcrumb,
-    [BreadcrumbItem.name]: BreadcrumbItem,
     [Tabs.name]: Tabs,
     [TabPane.name]: TabPane
   },
@@ -31,13 +14,6 @@ export default {
     action: [String, Array],
     content: [String, Array],
     extraContent: [String, Array],
-    breadcrumbList: Array,
-    breadcrumbNameMap: Object,
-    breadcrumbSeparator: String,
-    linkElement: {
-      type: String,
-      default: 'router-link'
-    },
     tabList: Array,
     tabActiveKey: String
   },
@@ -45,165 +21,50 @@ export default {
     onChange (tab) {
       const key = tab.name
       this.$emit('tab-change', key)
-    },
-    renderItem (linkElement, href, title) {
-      return this.$createElement(
-        linkElement,
-        {
-          props: linkElement !== 'a' ? { to: href } : {},
-          attrs: linkElement === 'a' ? { href: href } : {}
-        },
-        title
-      )
-    },
-    conversionFromProps () {
-      const { breadcrumbList, breadcrumbSeparator, linkElement } = this
-      return this.$createElement(
-        'el-breadcrumb',
-        {
-          class: 'breadcrumb',
-          props: {
-            separator: breadcrumbSeparator
-          }
-        },
-        breadcrumbList.map(item => {
-          return this.$createElement(
-            'el-breadcrumb-item',
-            {
-              key: item.title
-            },
-            [
-              item.href
-                ? this.renderItem(linkElement, item.href, item.title)
-                : item.title
-            ]
-          )
-        })
-      )
-    },
-    conversionFromLocation (routerPath, breadcrumbNameMap) {
-      const { breadcrumbSeparator, linkElement } = this
-      // Convert the url to an array
-      const pathSnippets = urlToList(routerPath)
-      // Loop data mosaic routing
-      const extraBreadcrumbItems = pathSnippets.map((url, index) => {
-        const currentBreadcrumb = getBreadcrumb(breadcrumbNameMap, url)
-        const isLinkable =
-          index !== pathSnippets.length - 1 && currentBreadcrumb.component
-        if (currentBreadcrumb.name && !currentBreadcrumb.hideInBreadcrumb) {
-          return this.$createElement(
-            'el-breadcrumb-item',
-            {
-              key: url
-            },
-            [
-              this.renderItem(
-                isLinkable ? linkElement : 'span',
-                url,
-                currentBreadcrumb.name
-              )
-            ]
-          )
-        }
-        return this.$createElement()
-      })
-      // Add home breadcrumbs to your head
-      extraBreadcrumbItems.unshift(
-        this.$createElement(
-          'el-breadcrumb-item',
-          {
-            key: 'home'
-          },
-          [this.renderItem(linkElement, '/', '首页')]
-        )
-      )
-      return this.$createElement(
-        'el-breadcrumb',
-        {
-          class: 'breadcrumb',
-          props: {
-            separator: breadcrumbSeparator
-          }
-        },
-        extraBreadcrumbItems
-      )
-    },
-    conversionBreadcrumbList () {
-      const { breadcrumbList, breadcrumbNameMap } = this
-      const routerPath = this.$route.path
-      if (breadcrumbList && breadcrumbList.length) {
-        return this.conversionFromProps()
-      }
-      if (routerPath) {
-        return this.conversionFromLocation(routerPath, breadcrumbNameMap)
-      }
-    },
-    renderTabs () {
-      const { tabList, tabActiveKey } = this
-      return this.$createElement(
-        'el-tabs',
-        {
-          class: 'tabs',
-          props: {
-            value: tabActiveKey
-          },
-          on: {
-            'tab-click': this.onChange
-          }
-        },
-        tabList.map(item => {
-          return this.$createElement('el-tab-pane', {
-            props: {
-              label: item.tab,
-              name: item.key
-            }
-          })
-        })
-      )
     }
   },
   render (h) {
-    const { logo, title, action, content, extraContent, tabList } = this
-    return h(
-      'div',
-      {
-        class: 'page-header'
-      },
-      [
-        h(
-          'div',
+    const { logo, title, action, content, extraContent, tabList, tabActiveKey } = this
+
+    return (
+      <div class='page-header'>
+        <div class='detail'>
           {
-            class: 'detail'
-          },
-          [
             (logo || this.$slots.logo) &&
-              h('div', { class: 'logo' }, logo || this.$slots.logo),
-            h('div', { class: 'main' }, [
-              h('div', { class: 'row' }, [
-                (title || this.$slots.title) &&
-                  h('h1', { class: 'title' }, title || this.$slots.title),
-                (action || this.$slots.action) &&
-                  h('div', { class: 'action' }, action || this.$slots.action)
-              ]),
-              h('div', { class: 'row' }, [
-                (content || this.$slots.content) &&
-                  h(
-                    'div',
-                    { class: 'content' },
-                    content || this.$slots.content
-                  ),
-                (extraContent || this.$slots.extraContent) &&
-                  h(
-                    'div',
-                    { class: 'extra-content' },
-                    extraContent || this.$slots.extraContent
-                  )
-              ])
-            ])
-          ]
-        ),
-        tabList && tabList.length && this.renderTabs()
-      ]
+            (<div class='logo'>
+              {logo || this.$slots.logo}
+            </div>)
+          }
+          <div class='main'>
+            <div class='row'>
+              {
+                (title || this.$slots.title) && <h1 class='title'>{title || this.$slots.title}</h1>
+              }
+              {
+                (action || this.$slots.action) && <div class='action'>{action || this.$slots.action}</div>
+              }
+            </div>
+            <div class='row'>
+              {
+                (content || this.$slots.content) && <div class='content'>{content || this.$slots.content}</div>
+              }
+              {
+                (extraContent || this.$slots['extra-content']) && <div class='extra-content'>{extraContent || this.$slots['extra-content']}</div>
+              }
+            </div>
+          </div>
+        </div>
+        {
+          tabList && tabList.length &&
+          <el-tabs class='tabs' value={tabActiveKey} onTabClick={this.onChange}>
+            {
+              tabList.map(item => {
+                return (<el-tab-pane label={item.tab} name={item.key} />)
+              })
+            }
+          </el-tabs>
+        }
+      </div>
     )
   }
 }
@@ -219,27 +80,21 @@ export default {
 
   .detail {
     display: flex;
+    margin-left: -8px;
   }
 
   .row {
     display: flex;
   }
 
-  .breadcrumb {
-    margin-bottom: 16px;
-    /deep/ .el-breadcrumb {
-      &__inner,
-      &__inner a {
-        font-weight: normal;
-      }
-    }
-  }
-
   .tabs {
     margin: 0 0 -16px -8px;
 
     /deep/ .el-tabs__header {
-      border-bottom: $border-width-base $border-style-base $border-color-split;
+      // border-bottom: $border-width-base $border-style-base $border-color-split;
+      .el-tabs__nav-wrap::after {
+        height: 0;
+      }
     }
   }
 
