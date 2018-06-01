@@ -1,7 +1,11 @@
 <template>
   <el-container class="app-container">
     <!-- 左栏菜单 -->
-    <sider-menu :collapsed="collapsed" :logo="logo" title='GBSS ADMIN' defaultActive='home' :menu-data="getMenuData()"/>
+    <sider-menu :collapsed="collapsed"
+      :logo="logo" title='GBSS ADMIN'
+      defaultActive='home'
+      :menu-data="getMenuData()"
+      @collapse="handleMenuCollapse"/>
     <el-container>
       <!--全局头部-->
       <el-header :style="{padding: 0}" height="50px">
@@ -10,8 +14,7 @@
                        :notice-tabs="fetchNoticeTabs()"
                        :collapsed="collapsed"
                        :fetch-sugesstions="fetchSugesstions"
-                       @search-select="handleSearchSelect"
-                       @collapse="handleMenuCollapse">
+                       @search-select="handleSearchSelect">
         </global-header>
       </el-header>
       <!-- Main -->
@@ -106,7 +109,7 @@ export default {
 .app-container {
   position: relative;
   height: 100%;
-  background: $layout-body-background;
+  // background: $layout-body-background;
 }
 .github-icon {
   font-size: 20px;

@@ -64,6 +64,8 @@ export default {
     /deep/ .el-input {
       .el-input__inner {
         border: 0;
+        background: transparent;
+        color: #fff;
         border-radius: 0;
         padding-left: 0;
         padding-right: 0;

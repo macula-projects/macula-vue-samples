@@ -9,13 +9,12 @@
                       :logo="logo"
                       title="GBSS FRONT"
                       :fetch-sugesstions="fetchSugesstions"
-                      @search-select="handleSearchSelect"
-                      @collapse="handleMenuCollapse">
+                      @search-select="handleSearchSelect">
       </global-header>
     </el-header>
     <el-container>
       <!-- 左栏菜单 -->
-      <sider-menu :collapsed="collapsed" defaultActive='home' :menu-data="getMenuData()"/>
+      <sider-menu :collapsed="collapsed" defaultActive='home' :menu-data="getMenuData()" @collapse="handleMenuCollapse"/>
       <!-- Main -->
       <el-main :style="{'padding-bottom': 0}">
         <router-view/>
@@ -106,7 +105,7 @@ export default {
 .app-container {
   position: relative;
   height: 100%;
-  background: $layout-body-background;
+  // background: $layout-body-background;
 }
 .github-icon {
   font-size: 20px;

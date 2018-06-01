@@ -108,6 +108,8 @@ export default {
 .badge {
   /deep/ .el-badge__content {
     z-index: 1;
+    background-color: #f90;
+    border: 1px solid #373d41;
   }
 }
 .tabs {

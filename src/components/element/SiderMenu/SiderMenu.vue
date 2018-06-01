@@ -1,7 +1,8 @@
 <script>
 import { Aside, Menu, MenuItem, Submenu } from 'element-ui'
+import AntIcon from '../AntIcon'
 import * as pathToRegexp from 'path-to-regexp'
-
+import { debounce } from 'lodash'
 import { urlToList } from '@assets/element/js/utils/pathTools'
 
 export const getMenuMatchKeys = (flatMenuKeys, path) => {
@@ -17,7 +18,8 @@ export default {
     [Aside.name]: Aside,
     [Menu.name]: Menu,
     [MenuItem.name]: MenuItem,
-    [Submenu.name]: Submenu
+    [Submenu.name]: Submenu,
+    [AntIcon.name]: AntIcon
   },
   props: {
     collapsed: {
@@ -122,6 +124,16 @@ export default {
         }
       }
     },
+    toggle () {
+      const { collapsed } = this
+      this.$emit('collapse', !collapsed)
+      debounce(this.triggerResizeEvent, 600)()
+    },
+    triggerResizeEvent () {
+      const event = document.createEvent('HTMLEvents')
+      event.initEvent('resize', true, false)
+      window.dispatchEvent(event)
+    },
     getSubMenuOrItem (item) {
       if (item.children && item.children.some((child) => child.name)) {
         return (
@@ -177,7 +189,7 @@ export default {
     const selectedKey = selectedKeys[selectedKeys.length - 1]
 
     return (
-      <el-aside class={collapsed ? 'sider collapse' : 'sider'} width={collapsed ? '64px' : '256px'}>
+      <el-aside class={collapsed ? 'sider collapse' : 'sider'} width={collapsed ? '64px' : '226px'}>
         {
           logo ? (
             <div class='logo'>
@@ -188,6 +200,9 @@ export default {
             </div>
           ) : ''
         }
+        <div class="sider-trigger" onClick={this.toggle}>
+          <ant-icon type={collapsed ? 'menu-unfold' : 'menu-fold'} class="trigger" onClick={this.toggle} />
+        </div>
         <el-menu mode='vertical' unique-opened={true} collapse={collapsed} collapseTransition={false} default-active={selectedKey} default-openeds={openKeys}>
           {this.getNavMenuItems(menuData)}
         </el-menu>
@@ -206,15 +221,15 @@ export default {
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   position: relative;
   z-index: 10;
-  background-color: $layout-sider-background;
+  background-color: #333744;
   transition: all 0.3s;
 
   /deep/ .el-menu {
     color: $menu-dark-color;
-    background: $menu-dark-bg;
+    background: #42485b;
     border-right: 0;
     &--inline {
-      background: #000c17;
+      background: #333744;
     }
     &-item {
       color: inherit;
@@ -228,7 +243,7 @@ export default {
       }
       &:hover {
         color: #fff;
-        background-color: #000c17;
+        background-color: #4a5063;
         i {
           color: inherit;
         }
@@ -238,7 +253,7 @@ export default {
       }
       &.is-active {
         color: #fff;
-        background-color: #1890ff;
+        background-color: #00c1de;
         i {
           color: inherit;
         }
@@ -258,7 +273,7 @@ export default {
         }
         &:hover {
           color: #fff;
-          background-color: $menu-dark-bg;
+          background-color: #00c1de;
           > i {
             color: inherit;
           }
@@ -296,7 +311,7 @@ export default {
     line-height: 50px;
     padding-left: 24px;
     transition: all 0.3s;
-    background: #002140;
+    background: #373d41;
     overflow: hidden;
     img {
       display: inline-block;
@@ -311,6 +326,19 @@ export default {
       margin: 0 0 0 12px;
       // font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
       font-weight: 600;
+    }
+  }
+  .sider-trigger {
+    background: #4a5064;
+    height: 30px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    .trigger {
+      font-size: 16px;
+      line-height: 30px;
+      transition: all 0.3s;
     }
   }
 }

@@ -99,8 +99,8 @@ export default {
 
 .el-menu--horizontal {
   border: none;
-  color: #303133;
-  background: #fff;
+  color: #fff;
+  background: #373d41;
   &>.el-menu {
     &>.el-menu-item {
       &:hover {
@@ -123,7 +123,7 @@ export default {
       }
       &:hover {
         color: inherit;
-        background-color: $primary-1;
+        background-color: #2a2f32;
         i {
           color: inherit;
         }
@@ -145,7 +145,7 @@ export default {
         }
         &:hover {
           color: inherit;
-          background-color: $primary-1;
+          background-color: #2a2f32;
           > i {
             color: inherit;
           }

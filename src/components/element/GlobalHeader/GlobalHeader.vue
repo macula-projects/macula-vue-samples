@@ -3,14 +3,12 @@
     <!--头部左边-->
     <div class="left">
       <!-- LOGO -->
-      <div class='logo' v-if="logo" :style="{width : collapsed ? '64px' : '256px'}">
+      <div class='logo' v-if="logo" :style="{width : collapsed ? '64px' : '226px'}">
         <router-link to='/'>
           <img alt='logo' :src=logo />
           <h1>{{title || 'Macula UI Pro'}}</h1>
         </router-link>
       </div>
-
-      <ant-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" class="trigger" @click="toggle" />
       <!-- 顶部左边菜单 -->
       <top-menu :menu-data="menus" />
     </div>
@@ -47,7 +45,6 @@
 </template>
 
 <script>
-import { debounce } from 'lodash'
 import { Loading, Dropdown, DropdownItem, DropdownMenu } from 'element-ui'
 import Avatar from '../Avatar'
 import AntIcon from '../AntIcon'
@@ -64,9 +61,9 @@ export default {
     [DropdownMenu.name]: DropdownMenu,
     [DropdownItem.name]: DropdownItem,
     Avatar,
+    [AntIcon.name]: AntIcon,
     HeaderSearch,
     NoticeIcon,
-    AntIcon,
     TopMenu
   },
   props: {
@@ -126,16 +123,6 @@ export default {
     },
     onUserMenuClick (command) {
       this.$emit('user-menu-click', command)
-    },
-    toggle () {
-      const { collapsed } = this
-      this.$emit('collapse', !collapsed)
-      debounce(this.triggerResizeEvent, 600)()
-    },
-    triggerResizeEvent () {
-      const event = document.createEvent('HTMLEvents')
-      event.initEvent('resize', true, false)
-      window.dispatchEvent(event)
     }
   }
 }
@@ -146,9 +133,10 @@ export default {
 
 .global-header {
   height: 50px;
-  padding: 0 12px 0 0;
-  background:#fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  padding: 0 0 0 0;
+  color: #fff;
+  background:#373d41;
+  // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -159,8 +147,8 @@ export default {
       height: 50px;
       position: relative;
       line-height: 50px;
-      padding-left: 24px;
-      background: #002140;
+      padding-left: 16px;
+      background: #373d41;
       transition: all 0.3s;
       overflow: hidden;
       img {
@@ -178,16 +166,6 @@ export default {
         font-weight: 600;
       }
     }
-    .trigger {
-      font-size: 20px;
-      line-height: 50px;
-      cursor: pointer;
-      transition: all 0.3s;
-      padding: 0 24px;
-      &:hover {
-        background: $primary-1;
-      }
-    }
   }
   .right {
     height: 100%;
@@ -202,11 +180,11 @@ export default {
       > i {
         font-size: 16px;
         vertical-align: middle;
-        color: rgba(0, 0, 0, 0.65)
+        color: #fff
       }
       &.popover-open,
       &:hover {
-        background: $primary-1;
+        background: #2a2f32;
       }
     }
     .search {
@@ -220,6 +198,7 @@ export default {
       padding: 0;
     }
     .account {
+      color: #fff;
       .avatar {
         margin: 20px 8px 20px 0;
         color: $primary-color;
