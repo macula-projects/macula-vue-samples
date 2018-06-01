@@ -20,13 +20,20 @@
     <page-body>
       <el-table
         :data='tableData3'
-        height='250'
+        height='100%'
         border
         style='width: 100%'>
         <el-table-column prop='date' label='日期' width='180'/>
         <el-table-column prop='name' label='姓名' width='180'/>
         <el-table-column prop='address' label='地址'/>
       </el-table>
+      <div class="pagination">
+        <el-pagination
+          layout="total, sizes, prev, pager, next"
+          background
+          :total="tableData3.length">
+        </el-pagination>
+      </div>
     </page-body>
   </div>
 </template>
@@ -39,7 +46,7 @@
 </routeMeta>
 
 <script>
-import { Table, TableColumn, ButtonGroup, Button, Row, Col } from 'element-ui'
+import { Table, TableColumn, ButtonGroup, Button, Row, Col, Pagination } from 'element-ui'
 import PageHeader from '@components/element/PageHeader'
 import PageBody from '@components/element/PageBody'
 
@@ -100,7 +107,8 @@ export default {
     [PageHeader.name]: PageHeader,
     [PageBody.name]: PageBody,
     [Row.name]: Row,
-    [Col.name]: Col
+    [Col.name]: Col,
+    [Pagination.name]: Pagination
   },
   data () {
     return {
@@ -122,5 +130,9 @@ export default {
   .text-secondary {
     color: $text-color-secondary;
   }
+}
+.pagination {
+  float: right;
+  margin-top: 24px;
 }
 </style>

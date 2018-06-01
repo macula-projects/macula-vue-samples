@@ -1,7 +1,8 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <router-link to="/HelloWorld">HelloWorld</router-link>
+  <div>
+    <page-body>
+      Welcome to Macula UI Pro
+    </page-body>
   </div>
 </template>
 
@@ -13,11 +14,16 @@
 </routeMeta>
 
 <script>
+import PageBody from '@components/element/PageBody'
+
 export default {
   name: 'index',
+  components: {
+    [PageBody.name]: PageBody
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: '首页'
     }
   }
 }

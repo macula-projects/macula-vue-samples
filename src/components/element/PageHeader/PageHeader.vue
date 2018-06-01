@@ -90,7 +90,7 @@ export default {
   .tabs {
     margin: 0 0 -16px -8px;
 
-    /deep/ .el-tabs__header {
+    .el-tabs__header {
       // border-bottom: $border-width-base $border-style-base $border-color-split;
       .el-tabs__nav-wrap::after {
         height: 0;
