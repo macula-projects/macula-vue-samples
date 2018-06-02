@@ -102,6 +102,10 @@ export default {
     flex: 0 1 auto;
     margin-right: 16px;
     padding-top: 1px;
+    > i {
+      line-height: 30px;
+      font-size: 20px;
+    }
     > img {
       width: 28px;
       height: 28px;
