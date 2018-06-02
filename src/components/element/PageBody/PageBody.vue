@@ -19,17 +19,24 @@ export default {
     margin-bottom: 25px;
   }
   .table-header {
-    margin: 15px 0 5px 0;
-    display: flex;
-    justify-content: space-between;
     .el-form-item {
       margin-bottom: 0;
+      &__label {
+        margin-bottom: 0;
+      }
     }
+    .search {
+      display: flex;
+    }
+    margin-bottom: 10px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
   }
   .table-footer {
     margin: 15px 0 25px 0;
     height: 50px;
-    .action {
+    .actions {
       float: left;
     }
     .el-pagination {

@@ -104,6 +104,7 @@ export default {
   display: flex;
   align-items: center;
   transition: all 0.3s;
+  outline: none;
 }
 .badge {
   /deep/ .el-badge__content {
